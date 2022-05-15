@@ -18,21 +18,23 @@ export default function UsersContextProvider(props) {
 
     const [usersList, setUsersList] = useState(null)
     const [usersCount, setUsersCount] = useState(0)
+    const [usersTotal, setUsersTotal] = useState(0)
 
-    const dispatchUsersData = useCallback((users, count) => {
+    const dispatchUsersData = useCallback((users, count, total) => {
         setUsersList(users)
         setUsersCount(count)
+        setUsersTotal(total)
     }, [setUsersList])
 
     const deleteUser = useCallback((userId) => {
         const usersArr = [...usersList]
         const userIndex = usersArr.findIndex(el => el._id === userId)
         usersArr.splice(userIndex, 1)
-        let count = usersCount
-        count--
+        let total = usersTotal
+        total--
         setUsersList([...usersArr])
-        setUsersCount(count)
-    }, [usersList, usersCount])
+        setUsersTotal(total)
+    }, [usersList, usersTotal])
 
     const updateUser = useCallback((user) => {
         const usersArr = [...usersList]
@@ -40,22 +42,23 @@ export default function UsersContextProvider(props) {
         if (userIndex === -1) {
             return
         }
-        console.log(user)
         usersArr[userIndex] = user
         setUsersList([...usersArr])
     }, [usersList, setUsersList])
 
     const contextValues = useMemo(() => ({
         usersList,
-        dispatchUsersData,
         usersCount,
+        usersTotal,
+        dispatchUsersData,
         setUsersCount,
         deleteUser,
         updateUser
     }), [
         usersList,
-        dispatchUsersData,
         usersCount,
+        usersTotal,
+        dispatchUsersData,
         setUsersCount,
         deleteUser,
         updateUser

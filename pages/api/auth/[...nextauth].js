@@ -6,7 +6,7 @@ import User from '../../../models/User.model'
 
 export default NextAuth({
     session: {
-        jwt: true
+        strategy: 'jwt'
     },
     providers: [
         CredentialsProvider({
@@ -24,13 +24,32 @@ export default NextAuth({
                 if (!isPasswordValid) {
                     throw new Error('Wrong password.')
                 }
-                
-                return {
-                    email: user.email,
+
+                const payload = {
+                    _id: user._id,
                     role: user.role ? user.role : null,
-                    _id: user._id
+                    email: user.email,
+                    name: user.username ? user.username : 'No name',
                 }
+                
+                return payload
+                
             }
         })
-    ]
+    ],
+    callbacks: {
+        session: async ({ session, token }) => {
+            if (session?.user) {
+              session.user._id = token.uid;
+            }
+            return session;
+        },
+        jwt: async ({ user, token }) => {
+            if (user) {
+              token.uid = user._id;
+              token.role = user.role
+            }
+            return token;
+        },
+    }
 })

@@ -4,6 +4,31 @@ import User from '../../../models/User.model'
 
 export default async function handler(req, res) {
 
+    if (req.method === 'GET') {
+
+        await connectToDatabase()
+
+        const { sortField, sortDirection, limit, skip, search } = req.query
+
+        const searchArray = search && search !== '' ? search.trim().split(' ') : []
+        const searchRegexArray = searchArray.map(string => new RegExp(string, 'i'))
+
+        const searchRequest = searchRegexArray.length > 0 ? {$or: [{ username: {$in: searchRegexArray} }, {email: {$in: searchRegexArray}}]} : {}
+        let sortParams = {}
+        sortParams[sortField] = sortDirection
+
+        const users = await User.find(searchRequest).skip(+skip).limit(+limit).sort(sortParams)
+        const count = users.length
+        const total = await User.find().count()
+
+        const result = {
+            users,
+            count,
+            total
+        }
+        return res.status(200).json(result)
+    }
+
     if (req.method === 'POST') {
         const { email, username, role, phone_number } = req.body
         const password = generatePassword(12)
@@ -43,13 +68,9 @@ export default async function handler(req, res) {
             return res.status(500).json({ code: 'users/no-user-provided', message: 'A valid user must be provided.' })
         }
 
-        console.log(user)
-
         if (user.password) {
             delete user.password
         }
-
-        console.log(user)
 
         await connectToDatabase()
 

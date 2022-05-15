@@ -6,8 +6,6 @@ import { signOut } from "next-auth/react"
 
 export default function Header({ currentSession }) {
 
-    console.log(currentSession)
-
     const [pageTitle, setPageTitle] = useState('')
     const { getTranslatedTitle } = usePageTitleTranslator({locale: 'fr'})
 

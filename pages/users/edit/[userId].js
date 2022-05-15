@@ -9,8 +9,6 @@ export default function EditUserPage(props) {
 
     const [user, setUser] = useState(props.user)
 
-    console.log(props.user)
-
     return(
         <div className="container mx-auto my-10 text-gray-800">
             <div className="flex mb-5 text-sm">

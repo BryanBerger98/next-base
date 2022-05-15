@@ -9,38 +9,39 @@ import { useUsersContext } from "../../store/usersContext"
 
 async function getUsers(sort, skip, limit, searchString) {
     try {
-        const response = await axios.get(`/users?sortField=${sort.field}&sortDirection=${sort.direction}&limit=${limit}&skip=${skip}${searchString && searchString.length > 0 ? '&search=' + searchString : ''}`, {
+        const response = await axios.get(`/api/users?sortField=${sort.field}&sortDirection=${sort.direction}&limit=${limit}&skip=${skip}${searchString && searchString.length > 0 ? '&search=' + searchString : ''}`, {
             withCredentials: true
         })
         const users = response && response.data && response.data.users ? response.data.users : []
-        const count = response && response.data && response.data.count && response.data.count ? response.data.count : 0
+        const count = response && response.data && response.data.count ? response.data.count : 0
+        const total = response && response.data && response.data.total ? response.data.total : 0 
+        
         return {
             users,
-            count
+            count,
+            total
         }
     } catch (error) {
         throw error
     }
 }
 
-export default function UsersTable(props) {
+export default function UsersTable({searchString}) {
 
-    const { usersList, usersCount, dispatchUsersData } = useUsersContext()
+    const { usersList, usersTotal, dispatchUsersData } = useUsersContext()
 
     const [currentUser, setCurrentUser] = useState(null)
 
     const [limit, setLimit] = useState(10)
     const [skip, setSkip] = useState(0)
     const [sort, setSort] = useState({field: 'email', direction: -1})
-    const [searchString, setSearchString] = useState()
 
     const [dataLoading, setDataLoading] = useState(false)
 
     const loadUsersTable = useCallback((limit, skip, sort, searchString) => {
-        setDataLoading(true)
         getUsers(sort, skip, limit, searchString)
         .then(response => {
-            dispatchUsersData(response.users, response.count)
+            dispatchUsersData(response.users, response.count, response.total)
         })
         .catch(console.error)
         .finally(() => setDataLoading(false));
@@ -50,26 +51,23 @@ export default function UsersTable(props) {
         setSort({field, direction})
     }
 
-    const onSearchUsers = (searchString) => {
-        setSearchString(searchString)
-    }
-
     useEffect(() => {
         getSession()
         .then(session => {
-            console.log('SESSION', session)
-            setCurrentUser(session.user)
+            if (session) {
+                setCurrentUser(session.user)
+            }
+            console.log(session)
         })
-    }, [])
-
-    // useEffect(() => {
-    //     console.log('LIST !!!!', usersList)
-    // }, [usersList, usersC])
+    }, [setCurrentUser])
 
     useEffect(() => {
-        // setDataLoading(true)
-        // loadUsersTable(limit, skip, sort, searchString)
-    }, [setDataLoading, limit, skip, sort, searchString, loadUsersTable])
+        loadUsersTable(limit, skip, sort, searchString)
+    }, [limit, skip, sort, searchString, loadUsersTable])
+
+    useEffect(() => {
+        setDataLoading(true)
+    }, [setDataLoading])
 
     return(
         <Fragment>
@@ -117,7 +115,7 @@ export default function UsersTable(props) {
                 <tbody>
                 {
                         !dataLoading && usersList && usersList.map((user, index) => (
-                            <tr key={user.id + '-' + index} className={`${user.disabled ? 'bg-gray-200 text-gray-400' : ''}`}>
+                            <tr key={user._id + '-' + index} className={`${user.disabled ? 'bg-gray-200 text-gray-400' : ''}`}>
                                 <td className="py-3 border-b-[0.5px] border-gray-300">
                                     <span className="flex items-center gap-1">
                                         {user.disabled && <FiLock title='Compte désactivé' className="text-rose-500 text-md ml-1" />}
@@ -471,7 +469,7 @@ export default function UsersTable(props) {
                     }
                 </tbody>
             </table>
-            {!dataLoading && <TablePageSelector arrayLength={usersCount} limit={limit} setLimit={setLimit} skip={skip} setSkip={setSkip} />}
+            {!dataLoading && <TablePageSelector arrayLength={usersTotal} limit={limit} setLimit={setLimit} skip={skip} setSkip={setSkip} />}
         </Fragment>
     )
 }

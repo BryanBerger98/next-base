@@ -32,7 +32,7 @@ export default function UserTableDataMenu({user, currentUser}) {
     sendResetPasswordEmailToUser(user._id)
     .then(() => {
       toast.custom(
-        <div className='flex items-center gap-4 bg-slate-100 text-green-500 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>
+        <div className='flex items-center gap-4 bg-gray-100 text-green-500 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>
           <FiSend /><span>Email envoyé !</span>
         </div>
       )
@@ -52,14 +52,14 @@ export default function UserTableDataMenu({user, currentUser}) {
       }
     }).then(response => {
       toast.custom(
-        <div className='flex items-center gap-4 bg-slate-100 text-green-500 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>
+        <div className='flex items-center gap-4 bg-gray-100 text-green-500 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>
           <FiCheck /><span>Modification enregistrée</span>
         </div>
       )
       updateUser({...user, disabled: !user.disabled})
     }).catch(error => {
       toast.custom(
-        <div className='flex items-center gap-4 bg-red-500 text-slate-50 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>
+        <div className='flex items-center gap-4 bg-red-500 text-gray-50 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>
           <FiX /><span>Une erreur est survenue</span>
         </div>
       )
@@ -77,13 +77,13 @@ export default function UserTableDataMenu({user, currentUser}) {
       })
       deleteUser(user._id)
       toast.custom(
-        <div className='flex items-center gap-4 bg-slate-100 text-green-500 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>
+        <div className='flex items-center gap-4 bg-gray-100 text-green-500 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>
           <FiTrash /><span>Utilisateur supprimé</span>
         </div>
       )
     } catch (error) {
       toast.custom(
-        <div className='flex items-center gap-4 bg-red-500 text-slate-50 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>
+        <div className='flex items-center gap-4 bg-red-500 text-gray-50 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>
           <FiX /><span>Une erreur est survenue</span>
         </div>
       )
@@ -98,7 +98,7 @@ export default function UserTableDataMenu({user, currentUser}) {
       <div className="">
         <Menu as="div" className="relative inline-block text-left">
           <div>
-            <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-slate-800 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+            <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-800 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
               <FiMoreVertical />
             </Menu.Button>
           </div>
@@ -111,7 +111,7 @@ export default function UserTableDataMenu({user, currentUser}) {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute right-0 w-60 mt-2 origin-top-right bg-slate-100 divide-y divide-slate-300/25 rounded-lg shadow-lg focus:outline-none z-50">
+            <Menu.Items className="absolute right-0 w-60 mt-2 origin-top-right bg-gray-100 divide-y divide-gray-300/25 rounded-lg drop-shadow-md focus:outline-none z-50">
               <div className="px-1 py-1">
                 <Menu.Item>
                   {({ active }) => (
@@ -217,31 +217,34 @@ export default function UserTableDataMenu({user, currentUser}) {
                   </Menu.Item>
                 }
               </div>
-              <div className="px-1 py-1">
-                <Menu.Item>
-                  {({ active }) => (
-                    <button
-                      className={`${
-                        active ? 'bg-rose-500 text-white' : 'text-gray-900'
-                      } group flex rounded-lg items-center w-full px-2 py-2 text-sm`}
-                      onClick={() => setIsDeleteUserModalOpen(true)}
-                    >
-                      {active ? (
-                        <FiTrash
-                          className="w-5 h-5 mr-2"
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        <FiTrash
-                          className="w-5 h-5 mr-2 text-rose-500"
-                          aria-hidden="true"
-                        />
-                      )}
-                      Supprimer
-                    </button>
-                  )}
-                </Menu.Item>
-              </div>
+              {
+                currentUser && currentUser._id !== user._id &&
+                <div className="px-1 py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        className={`${
+                          active ? 'bg-rose-500 text-white' : 'text-gray-900'
+                        } group flex rounded-lg items-center w-full px-2 py-2 text-sm`}
+                        onClick={() => setIsDeleteUserModalOpen(true)}
+                      >
+                        {active ? (
+                          <FiTrash
+                            className="w-5 h-5 mr-2"
+                            aria-hidden="true"
+                          />
+                        ) : (
+                          <FiTrash
+                            className="w-5 h-5 mr-2 text-rose-500"
+                            aria-hidden="true"
+                          />
+                        )}
+                        Supprimer
+                      </button>
+                    )}
+                  </Menu.Item>
+                </div>
+              }
             </Menu.Items>
           </Transition>
         </Menu>
@@ -290,14 +293,14 @@ export default function UserTableDataMenu({user, currentUser}) {
             Pour confirmer la suppression de ce compte, veuillez écrire l'adresse email de l'utilisateur (<span className='font-bold select-none'>{user.email}</span>) ci-dessous:
           </p>
           <div className="flex text-sm">
-            <input type="email" value={confirmDeleteUserInputValue} onChange={(e) => setConfirmDeleteUserInputValue(e.target.value)} className="p-2 rounded-lg border-[0.5px] border-slate-200 bg-white w-full" id="deleteUserEmailInput" placeholder="example@example.com" />
+            <input type="email" value={confirmDeleteUserInputValue} onChange={(e) => setConfirmDeleteUserInputValue(e.target.value)} className="p-2 rounded-lg border-[0.5px] border-gray-200 bg-white w-full" id="deleteUserEmailInput" placeholder="example@example.com" />
           </div>
         </div>
 
         <div className="mt-4 flex">
           <button
             type="button"
-            className="ml-auto inline-flex justify-center px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 disabled:bg-slate-200 disabled:text-slate-400"
+            className="ml-auto inline-flex justify-center px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 disabled:bg-gray-200 disabled:text-gray-400"
             onClick={onConfirmDeleteUser}
             disabled={!confirmDeleteUserInputValue || (confirmDeleteUserInputValue && confirmDeleteUserInputValue !== user.email) ? true : false}
           >

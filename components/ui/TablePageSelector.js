@@ -26,7 +26,7 @@ export default function TablePageSelector({arrayLength, limit, setLimit, skip, s
   return (
     <div className="flex items-center justify-between mt-5">
         {buttons && buttons.length > 1 && (
-            <select id="usersPerPageSelect" className="appearance-none h-9 rounded-full px-4 drop-shadow text-sm text-indigo-500 bg-gray-100" onChange={onChangePage}>
+            <select id="usersPerPageSelect" className="appearance-none h-9 rounded-md px-4 drop-shadow text-sm text-indigo-500 bg-gray-100" onChange={onChangePage}>
                 {
                     buttons.map(button => (
                         <option key={`table-page-selector-option-${button}`} value={button}>Page n°{button}</option>
@@ -34,7 +34,7 @@ export default function TablePageSelector({arrayLength, limit, setLimit, skip, s
                 }
             </select>
         )}
-        <select id="usersPerPageSelect" value={limit} className="appearance-none h-9 rounded-full px-4 drop-shadow text-sm text-indigo-500 bg-gray-100 ml-auto" onChange={onChangeLimit}>
+        <select id="usersPerPageSelect" value={limit} className="appearance-none h-9 rounded-md px-4 drop-shadow text-sm text-indigo-500 bg-gray-100 ml-auto" onChange={onChangeLimit}>
             <option value="10">10 / page</option>
             <option value="25">25 / page</option>
             <option value="50">50 / page</option>
