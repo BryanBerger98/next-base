@@ -51,4 +51,4 @@ export async function getServerSideProps(context) {
         session
       }
     }
-  }
+}

@@ -19,7 +19,7 @@ export default function Layout(props) {
                 </div>
             }
             <div className='grow h-full flex flex-col'>
-                { session && status === 'authenticated' && <Header currentSession={session} /> }
+                { session && status === 'authenticated' && <Header /> }
                 <div className="grow">
                     {props.children}
                 </div>

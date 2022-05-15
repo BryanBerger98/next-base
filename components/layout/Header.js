@@ -1,19 +1,15 @@
-import { FiSearch, FiUser } from "react-icons/fi"
+import { FiSearch } from "react-icons/fi"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import usePageTitleTranslator from '../../helpers/page-title-translator'
-import { signOut } from "next-auth/react"
+import AccountDropDownMenu from "../account/AccountDropdownMenu"
 
-export default function Header({ currentSession }) {
+export default function Header() {
 
     const [pageTitle, setPageTitle] = useState('')
     const { getTranslatedTitle } = usePageTitleTranslator({locale: 'fr'})
 
     const router = useRouter()
-
-    function logoutHandler() {
-        signOut()
-      }
 
     useEffect(() => {
         const path = router.pathname
@@ -23,7 +19,7 @@ export default function Header({ currentSession }) {
     }, [router, getTranslatedTitle])
 
     return(
-        <div className="w-full bg-white drop-shadow p-4 grid grid-cols-12 gap-2 text-sm">
+        <div className="w-full bg-white drop-shadow p-4 grid grid-cols-12 gap-2 text-sm relative z-10">
             <div className="col-span-3 flex justify-start items-center">
                 <p className="text-gray-400">{pageTitle.toUpperCase()}</p>
             </div>
@@ -34,9 +30,7 @@ export default function Header({ currentSession }) {
                 </div>
             </div>
             <div className="col-span-3 flex justify-end items-center">
-                <div className="bg-indigo-500 flex items-center justify-center text-md text-slate-50 rounded-full w-9 h-9" onClick={logoutHandler}>
-                    <FiUser />
-                </div>
+                <AccountDropDownMenu />
             </div>
         </div>
     )

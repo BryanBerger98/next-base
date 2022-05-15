@@ -38,18 +38,19 @@ export default NextAuth({
         })
     ],
     callbacks: {
-        session: async ({ session, token }) => {
+        async session ({ session, token }) {
             if (session?.user) {
-              session.user._id = token.uid;
+              session.user._id = token.uid
+              session.user.role = token.role
             }
-            return session;
+            return session
         },
-        jwt: async ({ user, token }) => {
+        async jwt ({ user, token }) {
             if (user) {
-              token.uid = user._id;
+              token.uid = user._id
               token.role = user.role
             }
-            return token;
+            return token
         },
     }
 })
