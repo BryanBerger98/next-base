@@ -43,7 +43,7 @@ export default function AccountInformationsSection({ currentUser }) {
                <AccountProfilePhotoInput currentUser={currentUser} />
                 <div className="my-auto">
                     <h2 className="text-2xl">{currentUser && currentUser.username}</h2>
-                    <p>{currentUser && getTranslatedRole(currentUser.role)}</p>
+                    <p className="text-indigo-200">{currentUser && getTranslatedRole(currentUser.role)}</p>
                 </div>
                 <div className="ml-auto mb-auto text-sm">
                     <Button variant={'light'} onClick={() => setIsEditAccountInfosModalOpen(true)}>
