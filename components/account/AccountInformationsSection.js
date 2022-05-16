@@ -7,6 +7,7 @@ import Modal from "../ui/Modal";
 import { Field, Form, Formik } from "formik";
 import axios from "axios";
 import { useAuthContext } from "../../store/authContext";
+import AccountProfilePhotoInput from "./AccountProfilePhotoInput";
 
 export default function AccountInformationsSection({ currentUser }) {
 
@@ -39,9 +40,7 @@ export default function AccountInformationsSection({ currentUser }) {
     return(
         <>
             <div className="bg-indigo-500 rounded-md p-6 text-gray-50 mb-4 flex gap-4">
-                <div className="bg-gray-50 rounded-full h-20 w-20 flex items-center justify-center text-3xl text-gray-800 my-auto">
-                    <FiUser />
-                </div>
+               <AccountProfilePhotoInput currentUser={currentUser} />
                 <div className="my-auto">
                     <h2 className="text-2xl">{currentUser && currentUser.username}</h2>
                     <p>{currentUser && getTranslatedRole(currentUser.role)}</p>

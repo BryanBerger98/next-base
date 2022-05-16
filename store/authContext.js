@@ -22,7 +22,7 @@ export default function AuthContextProvider(props) {
 
     const getCurrentUser = useCallback(async () => {
         try {
-            const response = await axios.get('/api/auth/current-user')
+            const response = await axios.get('/api/auth/account')
             setCurrentUser(response.data)
             return response.data
         } catch (error) {

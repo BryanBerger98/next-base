@@ -10,7 +10,6 @@ export default function Layout(props) {
     const { getCurrentUser } = useAuthContext()
 
     useEffect(() => {
-        console.log(session)
         if (session) {
             getCurrentUser()
         }
