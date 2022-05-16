@@ -7,7 +7,7 @@ import Sidebar from './Sidebar'
 export default function Layout(props) {
 
     const {data: session, status} = useSession()
-    const { getCurrentUser } = useAuthContext()
+    const { getCurrentUser, currentUser } = useAuthContext()
 
     useEffect(() => {
         if (session) {
@@ -28,7 +28,7 @@ export default function Layout(props) {
                 </div>
             }
             <div className='grow h-full flex flex-col'>
-                { session && status === 'authenticated' && <Header /> }
+                { session && status === 'authenticated' && <Header currentUser={currentUser} /> }
                 <div className="grow">
                     {props.children}
                 </div>

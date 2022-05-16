@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import usePageTitleTranslator from '../../helpers/page-title-translator'
 import AccountDropDownMenu from "../account/AccountDropdownMenu"
 
-export default function Header() {
+export default function Header({ currentUser }) {
 
     const [pageTitle, setPageTitle] = useState('')
     const { getTranslatedTitle } = usePageTitleTranslator({locale: 'fr'})
@@ -30,7 +30,7 @@ export default function Header() {
                 </div>
             </div>
             <div className="col-span-3 flex justify-end items-center">
-                <AccountDropDownMenu />
+                <AccountDropDownMenu currentUser={currentUser} />
             </div>
         </div>
     )

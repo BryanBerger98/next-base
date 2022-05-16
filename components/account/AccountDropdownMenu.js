@@ -4,7 +4,7 @@ import { FiLogOut, FiSettings, FiUser } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import { signOut } from 'next-auth/react'
 
-export default function AccountDropDownMenu() {
+export default function AccountDropDownMenu({currentUser}) {
 
   const router = useRouter()
 
@@ -15,8 +15,12 @@ export default function AccountDropDownMenu() {
   return (
     <Menu as="div" className="relative inline-block text-left">
         <div>
-            <Menu.Button className='bg-indigo-500 flex items-center justify-center text-md text-slate-50 rounded-full w-9 h-9 hover:cursor-pointer hover:bg-indigo-600 focus:outline-none'>
-                <FiUser />
+            <Menu.Button className='bg-indigo-500 flex items-center justify-center text-md text-slate-50 rounded-full w-9 h-9 hover:cursor-pointer hover:bg-indigo-600 focus:outline-none overflow-hidden'>
+                {
+                    currentUser && currentUser.photo_url && currentUser.photo_url !== ''
+                    ? <img src={`/${currentUser.photo_url}`} alt={`${currentUser.username} profile photo`} />
+                    : <FiUser />
+                }
             </Menu.Button>
         </div>
         <Transition
