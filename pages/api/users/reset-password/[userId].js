@@ -16,11 +16,7 @@ export default async function handler(req, res) {
             return res.status(500).json({ message: 'A user id must be provided.' })
         }
 
-        console.log('USERID', userId)
-
         const user = await User.findById(userId)
-
-        console.log('USER', user)
 
         if (!user) {
             return res.status(404).json({ message: 'User not found.' })

@@ -1,10 +1,20 @@
 import { useSession } from 'next-auth/react'
+import { useAuthContext } from '../../store/authContext'
+import { useEffect } from 'react'
 import Header from './Header'
 import Sidebar from './Sidebar'
 
 export default function Layout(props) {
 
     const {data: session, status} = useSession()
+    const { getCurrentUser } = useAuthContext()
+
+    useEffect(() => {
+        console.log(session)
+        if (session) {
+            getCurrentUser()
+        }
+    }, [session])
 
     if (status === 'loading') {
         return <p>Loading...</p>

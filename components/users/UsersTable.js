@@ -57,7 +57,6 @@ export default function UsersTable({searchString}) {
             if (session) {
                 setCurrentUser(session.user)
             }
-            console.log(session)
         })
     }, [setCurrentUser])
 

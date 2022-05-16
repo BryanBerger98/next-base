@@ -13,8 +13,6 @@ const transporter = nodemailer.createTransport({
     }
 })
 
-console.log(process.env.EMAIL_HOST)
-
 const defaultHead = `
         <head>
             <meta charset="UTF-8">
