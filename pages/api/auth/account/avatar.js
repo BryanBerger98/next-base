@@ -5,6 +5,7 @@ import nextConnect from "next-connect"
 import { convertFileRequestObjetToModel, generateUniqueNameFromFileName } from "../../../../utils/files"
 import FileModel from '../../../../models/File.model'
 import UserModel from '../../../../models/User.model'
+import fs from 'fs/promises'
 
 const upload = multer({
     storage: multer.diskStorage({
@@ -42,11 +43,19 @@ const upload = multer({
         return res.status(401).json({ code: 'auth/unauthorized', message: 'Unauthorized.' })
     }
 
-    // TODO: Remove previous file !!
+    const currentUser = await UserModel.findById(session.user._id)
 
-    const file = {...convertFileRequestObjetToModel(req.file), created_by: session.user._id}
+    if (currentUser.photo_url && currentUser.photo_url !== '') {
+      const oldFile = await FileModel.findOne({path: currentUser.photo_url})
+      if (oldFile) {
+        await fs.unlink(`./public/${oldFile.path}`)
+        await FileModel.findByIdAndDelete(oldFile._id)
+      }
+    }
+
+    const file = {...convertFileRequestObjetToModel(req.file), created_by: currentUser._id}
     const savedFile = await FileModel.create(file)
-    const updatedUse = await UserModel.updateOne({_id: session.user._id}, { $set: { photo_url: file.path } })
+    const updatedUse = await UserModel.updateOne({_id: currentUser._id}, { $set: { photo_url: file.path } })
 
     await connectToDatabase()
     res.status(200).json({savedFile});

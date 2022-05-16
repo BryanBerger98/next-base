@@ -27,15 +27,22 @@ const fileSchema = new Schema({
     },
     file_name: {
         type: String,
-        default: ''
+        default: '',
+        unique: true,
+        required: true,
+        trim: true
     },
     path: {
         type: String,
-        default: ''
+        default: '',
+        index: true,
+        unique: true,
+        required: true,
+        trim: true
     },
     destination: {
         type: String,
-        default: ''
+        default: '',
     },
     created_on: {
         type: Date,
