@@ -25,7 +25,7 @@ export default function AccountInformationsSection({ currentUser }) {
         try {
 
             setIsEditAccountInfosModalOpen(false)
-            const response = await axios.put(`/api/auth/account`, {username}, {
+            const response = await axios.put(`/api/auth/account`, {username, phone_number: currentUser.phone_number}, {
                 withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json'
@@ -77,7 +77,7 @@ export default function AccountInformationsSection({ currentUser }) {
                             </Form>
                         )}
                     </Formik>
-                </div>                
+                </div>
             </Modal>
         </>
     )

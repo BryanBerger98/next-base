@@ -12,14 +12,24 @@ export default async function handler(req, res) {
             return res.status(401).json({  code: 'auth/unauthorized', message: 'Unauthorized.' })
         }
 
-        const { username } = req.body
+        const { username, phone_number } = req.body
 
-        if (!username || username.length === 0) {
-            return res.status(422).json({ code: 'auth/invalid-input', message: 'Invalid input.' })
+        if ((!username || username.length === 0) && (!phone_number || phone_number.length === 0)) {
+            return res.status(200).json({ message: 'Nothing to update.' })
+        }
+
+        const updateObject = {}
+
+        if (username) {
+            updateObject.username = username
+        }
+
+        if (phone_number) {
+            updateObject.phone_number = phone_number
         }
 
         await connectToDatabase()
-        const result = await User.updateOne({_id: session.user._id}, { $set: { username } })
+        const result = await User.updateOne({_id: session.user._id}, { $set: updateObject })
 
         return res.status(200).json(result)
 
