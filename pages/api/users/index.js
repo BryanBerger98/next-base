@@ -15,9 +15,34 @@ export default async function handler(req, res) {
 
         const searchRequest = searchRegexArray.length > 0 ? {$or: [{ username: {$in: searchRegexArray} }, {email: {$in: searchRegexArray}}]} : {}
         let sortParams = {}
-        sortParams[sortField] = sortDirection
+        if (sortField && sortField !== '' && sortDirection && sortDirection !== '') {
+            if (isNaN(+sortDirection) || (+sortDirection !== -1 && +sortDirection !== 1)) {
+                return res.status(422).json({ code: 'users/invalid-input', message: 'Query param `sortDirection` must be -1 or 1' })
+            }
+            sortParams[sortField] = sortDirection
+        } else {
+            sortParams = {
+                _id: -1
+            }
+        }
 
-        const users = await User.find(searchRequest).skip(+skip).limit(+limit).sort(sortParams)
+        if (limit && isNaN(+limit)) {
+            return res.status(422).json({ code: 'users/invalid-input', message: 'Query param `limit` is NaN' })
+        }
+
+        if (limit && +limit <= 0) {
+            return res.status(422).json({ code: 'users/invalid-input', message: 'Query param `limit` must be greater than 0' })
+        }
+
+        if (skip && isNaN(+skip)) {
+            return res.status(422).json({ code: 'users/invalid-input', message: 'Query param `skip` is NaN' })
+        }
+
+        if (skip && +skip < 0) {
+            return res.status(422).json({ code: 'users/invalid-input', message: 'Query param `skip` must be greater than or equal to 0' })
+        }
+
+        const users = await User.find(searchRequest).skip(skip ? +skip : 0).limit(limit ? +limit : 1000).sort(sortParams)
         const count = users.length
         const total = await User.find().count()
 
@@ -41,7 +66,7 @@ export default async function handler(req, res) {
         const existingUser = await User.findOne({email})
 
         if (existingUser) {
-            return res.status(422).json({ code: 'auth/email-already-in-use', message: 'This email is already in use.' })
+            return res.status(422).json({ code: 'users/email-already-in-use', message: 'This email is already in use.' })
         }
 
         const hashedPassword = await hashPassword(password)

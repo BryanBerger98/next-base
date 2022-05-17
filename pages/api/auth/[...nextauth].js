@@ -16,7 +16,7 @@ export default NextAuth({
                 const user = await User.findOne({email: credentials.email})
 
                 if (!user) {
-                    throw new Error('No user registered!')
+                    throw new Error('No user registered.')
                 }
 
                 const isPasswordValid = await verifyPassword(credentials.password, user.password)

@@ -49,16 +49,24 @@ const upload = multer({
     if (currentUser.photo_url && currentUser.photo_url !== '') {
       const oldFile = await FileModel.findOne({path: currentUser.photo_url})
       if (oldFile) {
-        await fs.unlink(`./public/${oldFile.path}`)
-        await FileModel.findByIdAndDelete(oldFile._id)
+        try {
+          await fs.unlink(`./public/${oldFile.path}`)
+          await FileModel.findByIdAndDelete(oldFile._id)
+        } catch (error) {
+          console.error('ERROR - Deleting avatar >', error)
+        }
       }
     }
 
     const file = {...convertFileRequestObjetToModel(req.file), created_by: currentUser._id}
-    const savedFile = await FileModel.create(file)
-    const updatedUse = await UserModel.updateOne({_id: currentUser._id}, { $set: { photo_url: file.path } })
-
-    res.status(200).json(savedFile)
+    try {
+      const savedFile = await FileModel.create(file)
+      const updatedUse = await UserModel.updateOne({_id: currentUser._id}, { $set: { photo_url: file.path } })
+      return res.status(200).json(savedFile)
+    } catch (error) {
+      console.error('ERROR - Saving avatar >', error)
+      return res.status(500).json({ code: 'auth/error', message: error.message }) 
+    }
 
   });
   

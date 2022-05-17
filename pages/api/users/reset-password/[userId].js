@@ -31,6 +31,6 @@ export default async function handler(req, res) {
         return res.status(200).json(emailResponse)
     }
 
-    res.status(405).json({ code:'auth/wrong-method', message: 'This request method is not allowed.' })
+    res.status(405).json({ code:'users/wrong-method', message: 'This request method is not allowed.' })
 
 }

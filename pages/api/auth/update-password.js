@@ -21,7 +21,7 @@ export default async function handler(req, res) {
 
         const isPasswordVerified = await verifyPassword(oldPassword, currentUser.password)
         if (!isPasswordVerified) {
-            return res.status(403).json({ code: 'auth/wrong-password', message: 'Wrong password' })
+            return res.status(403).json({ code: 'auth/wrong-password', message: 'Wrong password.' })
         }
 
         const hashedNewPassword = await hashPassword(newPassword)

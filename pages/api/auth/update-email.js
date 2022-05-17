@@ -21,7 +21,7 @@ export default async function handler(req, res) {
 
         const isPasswordVerified = await verifyPassword(password, currentUser.password)
         if (!isPasswordVerified) {
-            return res.status(403).json({ code: 'auth/wrong-password', message: 'Wrong password' })
+            return res.status(403).json({ code: 'auth/wrong-password', message: 'Wrong password.' })
         }
 
         await UserModel.updateOne({_id: currentUser._id}, { $set: { email } })

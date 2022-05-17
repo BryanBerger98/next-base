@@ -19,6 +19,14 @@ const errors = {
         'unauthorized': {
             fr: 'Non autorisé',
             en: 'Unauthorized'
+        },
+        'error': {
+            fr: 'Une erreur est survenue',
+            en: 'An error has occured'
+        },
+        'email-already-in-use': {
+            fr: 'Adresse email déjà utilisée',
+            en: 'Email already in use'
         }
     },
     users: {
@@ -26,9 +34,17 @@ const errors = {
             fr: 'Saisie invalide',
             en: 'Invalid input'
         },
-        'users/missing-id': {
+        'missing-id': {
             fr: 'Un id utilisateur doit être fourni',
             en: 'A user id must be provided'
+        },
+        'user-not-found': {
+            fr: 'Utilisateur inconnu',
+            en: 'User not found'
+        },
+        'email-already-in-use': {
+            fr: 'Adresse email déjà utilisée',
+            en: 'Email already in use'
         }
     }
 }

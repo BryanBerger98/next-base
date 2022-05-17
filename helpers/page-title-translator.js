@@ -6,6 +6,10 @@ const titles = {
     users: {
         fr: 'Utilisateurs',
         en: 'Users'
+    },
+    account: {
+        fr: 'Mon compte',
+        en: 'Account'
     }
 }
 

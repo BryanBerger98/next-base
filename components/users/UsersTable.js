@@ -141,7 +141,7 @@ export default function UsersTable({searchString}) {
                                     </span>
                                 </td>
                                 <td className="py-3 border-b-[0.5px] border-gray-300">
-                                    {user.phone_number && user.phone_number.length > 0 ? <span>user.phone_number</span> : ''}
+                                    {user.phone_number && user.phone_number.length > 0 ? <span>{user.phone_number}</span> : ''}
                                 </td>
                                 <td className="py-2 border-b-[0.5px] border-gray-300">
                                     {user.role === 'admin' ? 'Administrateur' : user.role === 'user' ? 'Utilisateur' : ''}
