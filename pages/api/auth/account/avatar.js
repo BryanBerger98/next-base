@@ -58,7 +58,7 @@ const upload = multer({
     const savedFile = await FileModel.create(file)
     const updatedUse = await UserModel.updateOne({_id: currentUser._id}, { $set: { photo_url: file.path } })
 
-    res.status(200).json({savedFile})
+    res.status(200).json(savedFile)
 
   });
   
