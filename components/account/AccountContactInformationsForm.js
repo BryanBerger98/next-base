@@ -1,11 +1,11 @@
 import { Formik, Field, Form } from "formik";
 import * as Yup from 'yup'
-import { useState, Fragment } from 'react'
+import { useState, useEffect, Fragment } from 'react'
 import axios from "axios";
 import { useAuthContext } from "../../store/authContext";
 import { FiAlertCircle, FiAtSign, FiSave } from "react-icons/fi";
-import Button from "../ui/Button";
 import PasswordFormModal from "./PasswordFormModal";
+import ButtonWithLoader from "../ui/ButtonWithLoader";
 
 async function updateUser({email, password, phone_number}) {
     try {
@@ -38,8 +38,10 @@ export default function AccountContactInformationsForm({ currentUser }) {
     const { dispatchCurrentUser } = useAuthContext()
 
     const [isPasswordFormModalOpen, setIsPasswordFormModalOpen] = useState(false)
-    const [formValues, setFormValues] = useState({})
     const [passwordError, setPasswordError] = useState(null)
+    const [saving, setSaving] = useState(false)
+    const [formValues, setFormValues] = useState({})
+
 
     const ContactInfosFormSchema = Yup.object().shape({
         phoneNumber: Yup.string(),
@@ -55,16 +57,21 @@ export default function AccountContactInformationsForm({ currentUser }) {
             return
         }
 
+        setSaving(true)
+
         try {
             await updateUser({phone_number: phoneNumber})
             currentUser.phone_number = phoneNumber
             dispatchCurrentUser(currentUser)
+            setSaving(false)
         } catch (error) {
+            setSaving(false)
             console.error(error)
         }
     }
 
     const handlePasswordFormSubmit = async (password) => {
+        setSaving(true)
         setPasswordError(null)
         const updateObject = {
             email: formValues.email && formValues.email.length > 0 ? formValues.email : null,
@@ -87,7 +94,9 @@ export default function AccountContactInformationsForm({ currentUser }) {
     
             dispatchCurrentUser(currentUser)
             setIsPasswordFormModalOpen(false)
+            setSaving(false)
         } catch (error) {
+            setSaving(false)
             if (error.response && error.response.data && error.response.data.code && error.response.data.code === 'auth/wrong-password') {
                 setPasswordError(error.response.data.code)
                 return
@@ -124,10 +133,10 @@ export default function AccountContactInformationsForm({ currentUser }) {
                             {touched.email && errors.email && <span className='ml-2 flex items-center text-rose-500 absolute bottom-2 right-2'><span className='mr-1'>{errors.email}</span><FiAlertCircle /></span>}
                         </div>
                         <div className="mt-auto mr-auto">
-                            <Button variant={'success'} type='submit'>
+                            <ButtonWithLoader variant={'success'} type='submit' saving={saving}>
                                 <FiSave />
                                 <span>Enregistrer</span>
-                            </Button>
+                            </ButtonWithLoader>
                         </div>
                     </Form>
                 )}

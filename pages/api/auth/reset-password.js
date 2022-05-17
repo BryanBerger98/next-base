@@ -14,13 +14,13 @@ export default async function handler(req, res) {
         const { email } = req.body
 
         if (!email || !email.includes('@')) {
-            return res.status(500).json({ message: 'Invalid input.' })
+            return res.status(500).json({ code: 'auth/invalid-input', message: 'Invalid input.' })
         }
 
         const user = await User.findOne({email})
 
         if (!user) {
-            return res.status(404).json({ message: 'User not found.' })
+            return res.status(404).json({ code: 'auth/user-not-found', message: 'User not found.' })
         }
 
         const expirationDate = Math.floor(Date.now() / 1000) + (60 * 60 * 2)
@@ -65,6 +65,6 @@ export default async function handler(req, res) {
         return res.status(200).json(updatedUser)
     }
 
-    res.status(404).json({ message: 'Not found' })
+    res.status(405).json({ code:'auth/wrong-method', message: 'This request method is not allowed.' })
 
 }

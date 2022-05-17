@@ -26,13 +26,12 @@ const upload = multer({
   
   const apiRoute = nextConnect({
     onError(error, req, res) {
-      console.error(error)
-      res.status(501).json({ error: `Sorry something Happened! ${error.message}` })
+      res.status(501).json({ code: 'auth/error', message: error.message })
     },
     onNoMatch(req, res) {
-      res.status(405).json({ error: `Method '${req.method}' Not Allowed` })
-    },
-  });
+      res.status(405).json({ code:'auth/wrong-method', message: 'This request method is not allowed.' })
+    }
+  })
   
   apiRoute.use(upload.single('avatar'))
   
@@ -42,6 +41,8 @@ const upload = multer({
     if (!session) {
         return res.status(401).json({ code: 'auth/unauthorized', message: 'Unauthorized.' })
     }
+
+    await connectToDatabase()
 
     const currentUser = await UserModel.findById(session.user._id)
 
@@ -57,22 +58,14 @@ const upload = multer({
     const savedFile = await FileModel.create(file)
     const updatedUse = await UserModel.updateOne({_id: currentUser._id}, { $set: { photo_url: file.path } })
 
-    await connectToDatabase()
-    res.status(200).json({savedFile});
+    res.status(200).json({savedFile})
+
   });
   
   export default apiRoute
   
   export const config = {
     api: {
-      bodyParser: false, // Disallow body parsing, consume as stream
-    },
-  };
-
-// export default async function handler(req, res) {
-
-    
-
-//     res.status(404).json({ message: 'Not found.' })
-
-// }
+      bodyParser: false
+    }
+  }

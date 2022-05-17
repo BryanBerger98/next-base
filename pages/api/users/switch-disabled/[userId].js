@@ -23,6 +23,6 @@ export default async function handler(req, res) {
 
     }
 
-    res.status(404).json({ message: 'Not found.' })
+    res.status(405).json({ code:'auth/wrong-method', message: 'This request method is not allowed.' })
 
 }

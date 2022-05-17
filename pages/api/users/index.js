@@ -31,20 +31,17 @@ export default async function handler(req, res) {
 
     if (req.method === 'POST') {
         const { email, username, role, phone_number } = req.body
-        const password = generatePassword(12)
 
-        if (!email || !email.includes('@') || !password || password.trim().length < 8) {
-            res.status(422).json({ code: 'auth/invalid-input', message: 'Invalid input on email or password.' })
-            return
+        if (!email || !email.includes('@')) {
+            return res.status(422).json({ code: 'users/invalid-input', message: 'Invalid input on email.' })
         }
 
+        const password = generatePassword(12)
         await connectToDatabase()
-
         const existingUser = await User.findOne({email})
 
         if (existingUser) {
-            res.status(422).json({ code: 'auth/email-already-in-use', message: 'This email is already in use.' })
-            return
+            return res.status(422).json({ code: 'auth/email-already-in-use', message: 'This email is already in use.' })
         }
 
         const hashedPassword = await hashPassword(password)
@@ -80,6 +77,6 @@ export default async function handler(req, res) {
 
     }
 
-    res.status(404).json({ message: 'Not found' })
+    res.status(405).json({ code:'users/wrong-method', message: 'This request method is not allowed.' })
 
 }

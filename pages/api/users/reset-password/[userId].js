@@ -13,13 +13,13 @@ export default async function handler(req, res) {
         const { userId } = req.query
         
         if (!userId) {
-            return res.status(500).json({ message: 'A user id must be provided.' })
+            return res.status(422).json({ code: 'users/missing-id', message: 'A user id must be provided.' })
         }
 
         const user = await User.findById(userId)
 
         if (!user) {
-            return res.status(404).json({ message: 'User not found.' })
+            return res.status(404).json({ code: 'users/user-not-found', message: 'User not found.' })
         }
 
         const expirationDate = Math.floor(Date.now() / 1000) + (60 * 60 * 2)
@@ -31,6 +31,6 @@ export default async function handler(req, res) {
         return res.status(200).json(emailResponse)
     }
 
-    res.status(404).json({ message: 'Not found' })
+    res.status(405).json({ code:'auth/wrong-method', message: 'This request method is not allowed.' })
 
 }

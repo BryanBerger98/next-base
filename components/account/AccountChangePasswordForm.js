@@ -4,8 +4,12 @@ import Button from '../ui/Button'
 import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
+import ButtonWithLoader from '../ui/ButtonWithLoader'
 
 export default function AccountChangePasswordForm() {
+
+    const [saving, setSaving] = useState(false)
+    const [errorCode, setErrorCode] = useState(null)
 
     const [formValues, setFormValues] = useState({
         oldPassword: '',
@@ -21,6 +25,8 @@ export default function AccountChangePasswordForm() {
     })
 
     const handleChangePasswordFormSubmit = async (values) => {
+        setSaving(true)
+        setErrorCode(null)
         const { newPassword, oldPassword } = values
         setFormValues(values)
 
@@ -31,7 +37,13 @@ export default function AccountChangePasswordForm() {
                 },
                 withCredentials: true
             })
+            setSaving(false)
         } catch (error) {
+            setSaving(false)
+            if (error.response && error.response.data && error.response.data.code && error.response.data.code === 'auth/wrong-password') {
+                setErrorCode(error.response.data.code)
+                return
+            }
             console.error(error)
         }
 
@@ -72,10 +84,10 @@ export default function AccountChangePasswordForm() {
                         {touched.confirmNewPassword && errors.confirmNewPassword && <span className='ml-2 flex items-center text-rose-500 absolute bottom-2 right-2'><span className='mr-1'>{errors.confirmNewPassword}</span><FiAlertCircle /></span>}
                     </div>
                     <div className="mt-auto mr-auto">
-                        <Button variant={'success'} type='submit'>
+                        <ButtonWithLoader variant={'success'} type='submit' saving={saving} loaderOrientation={'right'} error={errorCode} displayErrorMessage={true}>
                             <FiSave />
                             <span>Enregistrer</span>
-                        </Button>
+                        </ButtonWithLoader>
                     </div>
                 </Form>
             )}
