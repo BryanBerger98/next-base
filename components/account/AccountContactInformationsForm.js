@@ -8,7 +8,6 @@ import Button from "../ui/Button";
 import PasswordFormModal from "./PasswordFormModal";
 
 async function updateUser({email, password, phone_number}) {
-
     try {
         if (email && password) {
             const response = await axios.put('/api/auth/update-email', {email, password}, {
@@ -40,6 +39,7 @@ export default function AccountContactInformationsForm({ currentUser }) {
 
     const [isPasswordFormModalOpen, setIsPasswordFormModalOpen] = useState(false)
     const [formValues, setFormValues] = useState({})
+    const [passwordError, setPasswordError] = useState(null)
 
     const ContactInfosFormSchema = Yup.object().shape({
         phoneNumber: Yup.string(),
@@ -65,26 +65,35 @@ export default function AccountContactInformationsForm({ currentUser }) {
     }
 
     const handlePasswordFormSubmit = async (password) => {
+        setPasswordError(null)
         const updateObject = {
             email: formValues.email && formValues.email.length > 0 ? formValues.email : null,
             phone_number: formValues.phoneNumber && formValues.phoneNumber.length > 0 ? formValues.phoneNumber : null
         }
 
-        await updateUser({
-            ...updateObject,
-            password: password && password.length >= 8 ? password : null,
-        })
-
-        if (updateObject.email) {
-            currentUser.email = updateObject.email
+        try {
+            await updateUser({
+                ...updateObject,
+                password: password && password.length >= 8 ? password : null,
+            })
+    
+            if (updateObject.email) {
+                currentUser.email = updateObject.email
+            }
+    
+            if (updateObject.phone_number) {
+                currentUser.phone_number = updateObject.phone_number
+            }
+    
+            dispatchCurrentUser(currentUser)
+            setIsPasswordFormModalOpen(false)
+        } catch (error) {
+            if (error.response && error.response.data && error.response.data.code && error.response.data.code === 'auth/wrong-password') {
+                setPasswordError(error.response.data.code)
+                return
+            }
+            console.error(error)
         }
-
-        if (updateObject.phone_number) {
-            currentUser.phone_number = updateObject.phone_number
-        }
-
-        dispatchCurrentUser(currentUser)
-        setIsPasswordFormModalOpen(false)
     }
 
     return(
@@ -123,7 +132,7 @@ export default function AccountContactInformationsForm({ currentUser }) {
                     </Form>
                 )}
             </Formik>
-            <PasswordFormModal isOpen={isPasswordFormModalOpen} setIsOpen={setIsPasswordFormModalOpen} submitFunction={handlePasswordFormSubmit} />
+            <PasswordFormModal isOpen={isPasswordFormModalOpen} setIsOpen={setIsPasswordFormModalOpen} submitFunction={handlePasswordFormSubmit} error={passwordError} />
         </Fragment>
     )
 }
