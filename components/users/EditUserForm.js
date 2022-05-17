@@ -1,20 +1,18 @@
 import { useCallback, useState } from "react"
 import { Formik, Form, Field, FastField } from "formik"
 import * as Yup from 'yup'
-import { FiAlertCircle, FiCheck, FiSave } from "react-icons/fi"
-import { AiOutlineLoading3Quarters } from "react-icons/ai"
+import { FiAlertCircle, FiSave } from "react-icons/fi"
 import DebouncedField from "../ui/DebouncedField"
 import axios from "axios"
 import { useRouter } from "next/router"
-import Button from "../ui/Button"
+import ButtonWithLoader from "../ui/ButtonWithLoader"
 
 export default function EditUserForm({user, setUser}) {
 
     const router = useRouter()
 
     const [saving, setSaving] = useState(false)
-    const [saved, setSaved] = useState(false)
-    const [savedDelay, setSavedDelay] = useState()
+    const [errorCode, setErrorCode] = useState(null)
 
     const UserFormSchema = Yup.object().shape({
         username: Yup.string(),
@@ -25,8 +23,7 @@ export default function EditUserForm({user, setUser}) {
 
     const handleSubmit = useCallback(async (values) => {
         setSaving(true)
-        setSaved(false)
-        if (savedDelay) clearTimeout(savedDelay)
+        setErrorCode(null)
         if (user) {
             axios.put('/api/users', {...user, ...values}, {
                 headers: {
@@ -34,14 +31,12 @@ export default function EditUserForm({user, setUser}) {
                 }
             }).then(response => {
                 setSaving(false)
-                setSaved(true)
-                setUser({...user, ...values})
-                const delay = setTimeout(() => {
-                    setSaved(false)
-                }, 3000)
-                setSavedDelay(delay)
             }).catch(error => {
                 setSaving(false)
+                if (error.response && error.response.data && error.response.data.code) {
+                    setErrorCode(error.response.data.code)
+                    return
+                }
                 console.error(error)
             })
         } else {
@@ -51,19 +46,17 @@ export default function EditUserForm({user, setUser}) {
                 }
             }).then(response => {
                 setSaving(false)
-                setSaved(true)
-                setUser({...user, ...values})
-                const delay = setTimeout(() => {
-                    setSaved(false)
-                }, 3000)
-                setSavedDelay(delay)
                 router.push(`edit/${response.data._id}`)
             }).catch(error => {
                 setSaving(false)
+                if (error.response && error.response.data && error.response.data.code) {
+                    setErrorCode(error.response.data.code)
+                    return
+                }
                 console.error(error)
             })
         }
-    }, [user, savedDelay, setSaved, setSavedDelay, setUser, setSaving])
+    }, [user, setUser, setSaving])
 
   return (
     <Formik
@@ -81,7 +74,7 @@ export default function EditUserForm({user, setUser}) {
             validateOnMount={false}
         >
             {({errors, touched, handleChange, values}) => (
-                <Form>
+                <Form className="text-sm">
                     <div className="flex flex-col mb-3 text-sm relative">
                         <label htmlFor="userNameInput" className="text-slate-600 mb-1 ml-1">{'Nom d\'utilisateur'}</label>
                         <FastField name='username' >
@@ -122,19 +115,10 @@ export default function EditUserForm({user, setUser}) {
                             )}
                         </FastField>
                     </div>
-                    <div className="flex items-center gap-2 relative w-fit">
-                        <div className="relative z-20">
-                            <Button variant={'success'} type={'submit'} disabled={saving}>
-                                <FiSave /><span>Enregistrer</span>
-                            </Button>
-                        </div>
-                        <div className={`flex items-center transition ease-in-out duration-300 absolute right-0 z-10 ${saving && !saved && 'translate-x-9'}`}>
-                            <AiOutlineLoading3Quarters className={`text-2xl text-indigo-500 ${saving && 'animate-spin'}`} />
-                        </div>
-                        <div className={`flex items-center gap-1 transition ease-in-out duration-300 absolute right-0 z-10 ${saved && !saving && 'translate-x-9'}`}>
-                            <FiCheck className={`text-2xl text-green-500`} />
-                        </div>
-                    </div>
+                    <ButtonWithLoader variant={'success'} type='submit' saving={saving} loaderOrientation={'right'} error={errorCode} displayErrorMessage={true}>
+                        <FiSave />
+                        <span>Enregistrer</span>
+                    </ButtonWithLoader>
                 </Form>
             )}
         </Formik>
