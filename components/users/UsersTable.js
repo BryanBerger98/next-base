@@ -40,32 +40,44 @@ export default function UsersTable({searchString}) {
         {
             title: 'Nom',
             name: 'username',
-            sortable: true
+            sortable: true,
+            fontStyle: 'semibold',
+            align: 'left'
         },
         {
             title: 'Adresse email',
             name: 'email',
-            sortable: true
+            sortable: true,
+            fontStyle: 'semibold',
+            align: 'left'
         },
         {
             title: 'Télépohne',
             name: 'phone_number',
-            sortable: true
+            sortable: true,
+            fontStyle: 'semibold',
+            align: 'left'
         },
         {
             title: 'Rôle',
             name: 'role',
-            sortable: true
+            sortable: true,
+            fontStyle: 'semibold',
+            align: 'left'
         },
         {
             title: 'Date de création',
-            name: 'crated_on',
-            sortable: true
+            name: 'created_on',
+            sortable: true,
+            fontStyle: 'semibold',
+            align: 'left'
         },
         {
             title: 'Actions',
             name: 'actions',
-            sortable: false
+            sortable: false,
+            fontStyle: 'semibold',
+            align: 'center'
         }
     ]
 

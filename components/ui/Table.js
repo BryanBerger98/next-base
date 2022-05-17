@@ -24,15 +24,15 @@ export default function Table({dataLoading, dataCount, fields, defaultLimit, def
                         {
                             fields.map((field, index) => (
                                 field.sortable ?
-                                <th key={field.name + '-' + index} className="text-left font-semibold border-b border-gray-400 py-2 hover:cursor-pointer" onClick={() => onChangeSort(field.name, sort.direction === 1 ? -1 : 1)}>
-                                    <span className="flex gap-1 items-center">
+                                <th key={field.name + '-' + index} className={`text-center font-${field.fontStyle ? field.fontStyle : 'semibold'} border-b border-gray-400 py-2 hover:cursor-pointer`} onClick={() => onChangeSort(field.name, sort.direction === 1 ? -1 : 1)}>
+                                    <span className={`flex gap-1 items-center justify-${field.align === 'left' ? 'start' : field.align === 'right' ? 'end' : 'center'}`}>
                                         <span>{field.title}</span>
                                         {sort.field === field.name && sort.direction === 1 && <FiArrowUp />}
                                         {sort.field === field.name && sort.direction === -1 && <FiArrowDown />}
                                     </span>
                                 </th>
-                                : <th key={field.name + '-' + index} className="text-left font-semibold border-b border-gray-400 py-2">
-                                    <span className="flex gap-1 items-center">
+                                : <th key={field.name + '-' + index} className={`font-${field.fontStyle ? field.fontStyle : 'semibold'} border-b border-gray-400 py-2`}>
+                                    <span className={`flex gap-1 items-center justify-${field.align === 'left' ? 'start' : field.align === 'right' ? 'end' : 'center'}`}>
                                         <span>{field.title}</span>
                                     </span>
                                 </th>
