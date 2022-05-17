@@ -3,6 +3,7 @@ import { useAuthContext } from '../../store/authContext'
 import { useEffect } from 'react'
 import Header from './Header'
 import Sidebar from './Sidebar'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
 export default function Layout(props) {
 
@@ -16,7 +17,11 @@ export default function Layout(props) {
     }, [session])
 
     if (status === 'loading') {
-        return <p>Loading...</p>
+        return(
+            <div className="absolute inset-0 z-50 bg-gray-50/30 flex items-center justify-center">
+                <AiOutlineLoading3Quarters className={`text-6xl text-indigo-500 animate-spin`} />
+            </div>
+        )
     }
 
     return(

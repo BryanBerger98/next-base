@@ -25,7 +25,7 @@ const errors = {
             en: 'An error has occured'
         },
         'email-already-in-use': {
-            fr: 'Adresse email déjà utilisée',
+            fr: 'Adresse email déjà attribuée',
             en: 'Email already in use'
         }
     },
@@ -43,9 +43,13 @@ const errors = {
             en: 'User not found'
         },
         'email-already-in-use': {
-            fr: 'Adresse email déjà utilisée',
+            fr: 'Adresse email déjà attribuée',
             en: 'Email already in use'
         }
+    },
+    default: {
+        fr: 'Une erreur est survenue',
+        en: 'An error has occured'
     }
 }
 
@@ -63,8 +67,8 @@ export default function ErrorsTranslator(options) {
         const locale = options && options.locale && options.locale !== '' ? options.locale : 'en'
         const module = errorCode.split('/')[0]
         const code = errorCode.split('/')[1]
-        if (!errors[module] || !errors[module][code] || !errors[module][code][locale]) {
-            return ''
+        if (!errors[module] || !errors[module][code]) {
+            return !errors[module][code][locale] ? errors.default.en : errors.default[locale]
         }
         return errors[module][code][locale]
     }

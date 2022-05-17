@@ -13,7 +13,7 @@ export default NextAuth({
             async authorize(credentials) {
                 await connectToDatabase()
 
-                const user = await User.findOne({email: credentials.email})
+                const user = await User.findOne({email: credentials.email.toLowerCase().trim()})
 
                 if (!user) {
                     throw new Error('No user registered.')

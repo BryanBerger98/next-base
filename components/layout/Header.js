@@ -19,7 +19,7 @@ export default function Header({ currentUser }) {
     }, [router, getTranslatedTitle])
 
     return(
-        <div className="w-full bg-white drop-shadow p-4 grid grid-cols-12 gap-2 text-sm relative z-10">
+        <div className="w-full bg-white drop-shadow p-3 grid grid-cols-12 gap-2 text-sm relative z-10">
             <div className="col-span-3 flex justify-start items-center">
                 <p className="text-gray-400">{pageTitle.toUpperCase()}</p>
             </div>

@@ -6,6 +6,7 @@ import Modal from '../ui/Modal'
 import axios from 'axios'
 import { useUsersContext } from '../../store/usersContext'
 import { useRouter } from 'next/router'
+import Button from '../ui/Button'
 
 async function sendResetPasswordEmailToUser(userId) {
     try {
@@ -257,14 +258,17 @@ export default function UserTableDataMenu({user, currentUser}) {
           </p>
         </div>
 
-        <div className="mt-4 flex">
-          <button
+        <div className="mt-4 flex text-sm justify-end">
+          {/* <button
             type="button"
             className="ml-auto inline-flex justify-center px-4 py-2 text-sm font-medium text-yellow-900 bg-yellow-100 border border-transparent rounded-md hover:bg-yellow-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-yellow-500"
             onClick={onConfirmSwitchDisableUser}
           >
             Confirmer
-          </button>
+          </button> */}
+          <Button variant={'warning'} onClick={onConfirmSwitchDisableUser}>
+            Confirmer
+          </Button>
         </div>
       </Modal>
       <Modal isOpen={isEnableUserModalOpen} closeModal={() => setIsEnableUserModalOpen(false)} title={{text: <span className='flex items-center gap-2'><FiUnlock /><span>Débloquer ce compte</span></span>, color: 'text-yellow-500'}}>
@@ -274,14 +278,17 @@ export default function UserTableDataMenu({user, currentUser}) {
           </p>
         </div>
 
-        <div className="mt-4 flex">
-          <button
+        <div className="mt-4 flex text-sm justify-end">
+          {/* <button
             type="button"
             className="ml-auto inline-flex justify-center px-4 py-2 text-sm font-medium text-yellow-900 bg-yellow-100 border border-transparent rounded-md hover:bg-yellow-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-yellow-500"
             onClick={onConfirmSwitchDisableUser}
           >
             Confirmer
-          </button>
+          </button> */}
+          <Button variant={'warning'} onClick={onConfirmSwitchDisableUser}>
+            Confirmer
+          </Button>
         </div>
       </Modal>
       <Modal isOpen={isDeleteUserModalOpen} closeModal={() => setIsDeleteUserModalOpen(false)} title={{text: <span className='flex items-center gap-2'><FiUnlock /><span>Supprimer ce compte</span></span>, color: 'text-red-500'}}>
@@ -297,15 +304,18 @@ export default function UserTableDataMenu({user, currentUser}) {
           </div>
         </div>
 
-        <div className="mt-4 flex">
-          <button
+        <div className="mt-4 flex text-sm justify-end">
+          {/* <button
             type="button"
             className="ml-auto inline-flex justify-center px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 disabled:bg-gray-200 disabled:text-gray-400"
             onClick={onConfirmDeleteUser}
             disabled={!confirmDeleteUserInputValue || (confirmDeleteUserInputValue && confirmDeleteUserInputValue !== user.email) ? true : false}
           >
             Confirmer
-          </button>
+          </button> */}
+          <Button variant={'danger'} onClick={onConfirmDeleteUser} disabled={!confirmDeleteUserInputValue || (confirmDeleteUserInputValue && confirmDeleteUserInputValue !== user.email) ? true : false}>
+            Confirmer
+          </Button>
         </div>
       </Modal>
     </>

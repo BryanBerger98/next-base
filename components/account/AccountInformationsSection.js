@@ -42,7 +42,7 @@ export default function AccountInformationsSection({ currentUser }) {
             <div className="bg-indigo-500 rounded-md p-6 text-gray-50 mb-4 flex gap-4">
                <AccountProfilePhotoInput currentUser={currentUser} />
                 <div className="my-auto">
-                    <h2 className="text-2xl">{currentUser && currentUser.username}</h2>
+                    <h2 className="text-2xl">{currentUser && currentUser.username ? currentUser.username : <span className="italic">Sans nom</span>}</h2>
                     <p className="text-indigo-200">{currentUser && getTranslatedRole(currentUser.role)}</p>
                 </div>
                 <div className="ml-auto mb-auto text-sm">
