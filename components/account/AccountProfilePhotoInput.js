@@ -2,6 +2,7 @@ import { FiUser } from "react-icons/fi"
 import { useRef } from 'react'
 import axios from "axios"
 import { useAuthContext } from '../../store/authContext'
+import Image from "next/image"
 
 export default function AccountProfilePhotoInput({ currentUser }) {
 
@@ -36,7 +37,7 @@ export default function AccountProfilePhotoInput({ currentUser }) {
         <div className="bg-gray-50 rounded-full h-20 w-20 flex items-center justify-center text-3xl text-gray-800 my-auto relative overflow-hidden group">
             {
                 currentUser && currentUser.photo_url && currentUser.photo_url !== ''
-                ? <img src={`/${currentUser.photo_url}`} alt={`${currentUser.username} profile photo`} />
+                ? <Image src={`/${currentUser.photo_url}`} alt={`${currentUser.username} profile photo`} width={80} height={80} />
                 : <FiUser />
             }
             <label htmlFor="updateProfilePhotoInput" className="absolute inset-0 text-xs items-end justify-center hidden group-hover:flex group-hover:cursor-pointer">

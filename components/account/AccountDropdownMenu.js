@@ -3,6 +3,7 @@ import { Fragment } from 'react'
 import { FiLogOut, FiSettings, FiUser } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import { signOut } from 'next-auth/react'
+import Image from 'next/image'
 
 export default function AccountDropDownMenu({currentUser}) {
 
@@ -18,7 +19,7 @@ export default function AccountDropDownMenu({currentUser}) {
             <Menu.Button className='bg-indigo-500 flex items-center justify-center text-md text-slate-50 rounded-full w-9 h-9 hover:cursor-pointer hover:bg-indigo-600 focus:outline-none overflow-hidden'>
                 {
                     currentUser && currentUser.photo_url && currentUser.photo_url !== ''
-                    ? <img src={`/${currentUser.photo_url}`} alt={`${currentUser.username} profile photo`} />
+                    ? <Image src={`/${currentUser.photo_url}`} alt={`${currentUser.username} profile photo`} width={36} height={36} className='rounded-full' />
                     : <FiUser />
                 }
             </Menu.Button>
