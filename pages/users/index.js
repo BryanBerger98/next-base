@@ -14,7 +14,7 @@ export default function UsersPage() {
     }
 
     return(
-        <div className="container mx-auto my-10 text-gray-800">
+        <div className="container mx-auto my-10 text-gray-800 px-5">
             <h1 className="flex items-center gap-2 text-xl mb-5"><FiUsers /><span>Utilisateurs</span></h1>
             <div className="w-full min-h-96 bg-white drop-shadow rounded-md p-3 text-sm">
                 <div className="grid grid-cols-12 mb-5">

@@ -1,4 +1,4 @@
-import { FiArrowDown, FiArrowUp, FiCheckCircle, FiLock, FiRotateCw } from "react-icons/fi"
+import { FiArrowDown, FiArrowUp, FiCheckCircle, FiLock, FiRotateCw, FiUser } from "react-icons/fi"
 import { getStringSlashedDateFromDate } from "../../utils/dates"
 import { useState, Fragment, useCallback, useEffect } from 'react'
 import axios from "axios"
@@ -6,6 +6,7 @@ import TablePageSelector from "../ui/TablePageSelector"
 import UserTableDataMenu from "./UserTableDataMenu"
 import { getSession } from "next-auth/react"
 import { useUsersContext } from "../../store/usersContext"
+import Image from "next/image"
 
 async function getUsers(sort, skip, limit, searchString) {
     try {
@@ -114,10 +115,22 @@ export default function UsersTable({searchString}) {
                 <tbody>
                 {
                         !dataLoading && usersList && usersList.map((user, index) => (
-                            <tr key={user._id + '-' + index} className={`${user.disabled ? 'bg-gray-200 text-gray-400' : ''}`}>
+                            <tr key={user._id + '-' + index} className={`${user.disabled ? 'text-gray-400' : ''}`}>
                                 <td className="py-3 border-b-[0.5px] border-gray-300">
-                                    <span className="flex items-center gap-1">
-                                        {user.disabled && <FiLock title='Compte désactivé' className="text-rose-500 text-md ml-1" />}
+                                    <span className="flex items-center gap-2">
+                                        <div className="h-10 w-10 rounded-full drop-shadow bg-indigo-500 text-gray-50 flex justify-center items-center text-lg overflow-hidden relative">
+                                            {
+                                                user.photo_url && user.photo_url !== ''
+                                                ? <Image className="rounded-full" src={`/${user.photo_url}`} alt={`${user.username ? user.username : user._id} profile photo`} height={40} width={40} />
+                                                : <FiUser />
+                                            }
+                                            {
+                                                user.disabled &&
+                                                <div className="absolute inset-0 bg-gray-50/75 flex justify-center items-center rounded-full">
+                                                    <FiLock title='Compte désactivé' className="text-red-500 text-lg" />
+                                                </div>
+                                            }
+                                        </div>
                                         {user.username && user.username.length > 0 ? <span>{user.username}</span> : <span className="italic text-gray-400">Sans nom</span>}
                                     </span>
                                 </td>
