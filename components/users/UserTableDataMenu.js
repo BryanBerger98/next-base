@@ -22,14 +22,14 @@ export default function UserTableDataMenu({user, currentUser}) {
     sendResetPasswordEmailToUser(user._id)
     .then(() => {
       toast.custom(
-        <div className='flex items-center gap-4 bg-gray-100 text-green-500 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>
+        <div className='flex items-center gap-4 bg-indigo-500 text-gray-50 text-medium text-base px-5 py-3 rounded-md drop-shadow relative z-[60]'>
           <FiSend /><span>Email envoyé !</span>
         </div>
       )
     })
     .catch(error => {
       toast.custom(
-        <div className='flex items-center gap-4 bg-red-500 text-gray-50 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>
+        <div className='flex items-center gap-4 bg-red-500 text-gray-50 text-medium text-base px-5 py-3 rounded-md drop-shadow'>
           <FiX /><span>Une erreur est survenue</span>
         </div>
       )
@@ -45,14 +45,14 @@ export default function UserTableDataMenu({user, currentUser}) {
   const onConfirmSwitchDisableUser = () => {
     switchDisabledUser(user._id).then(() => {
       toast.custom(
-        <div className='flex items-center gap-4 bg-gray-100 text-green-500 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>
+        <div className='flex items-center gap-4 bg-green-500 text-gray-50 text-medium text-base px-5 py-3 rounded-md drop-shadow'>
           <FiCheck /><span>Modification enregistrée</span>
         </div>
       )
       updateUser({...user, disabled: !user.disabled})
     }).catch(error => {
       toast.custom(
-        <div className='flex items-center gap-4 bg-red-500 text-gray-50 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>
+        <div className='flex items-center gap-4 bg-red-500 text-gray-50 text-medium text-base px-5 py-3 rounded-md drop-shadow'>
           <FiX /><span>Une erreur est survenue</span>
         </div>
       )
@@ -68,13 +68,13 @@ export default function UserTableDataMenu({user, currentUser}) {
       await deleteUserById(user._id)
       deleteUser(user._id)
       toast.custom(
-        <div className='flex items-center gap-4 bg-gray-100 text-green-500 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>
+        <div className='flex items-center gap-4 bg-green-500 text-gray-50 text-medium text-base px-5 py-3 rounded-md drop-shadow'>
           <FiTrash /><span>Utilisateur supprimé</span>
         </div>
       )
     } catch (error) {
       toast.custom(
-        <div className='flex items-center gap-4 bg-red-500 text-gray-50 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>
+        <div className='flex items-center gap-4 bg-red-500 text-gray-50 text-medium text-base px-5 py-3 rounded-md drop-shadow'>
           <FiX /><span>Une erreur est survenue</span>
         </div>
       )
@@ -240,7 +240,6 @@ export default function UserTableDataMenu({user, currentUser}) {
           </Transition>
         </Menu>
       </div>
-      <Toaster position="top-right" toastOptions={{duration: 4000}} />
       <Modal isOpen={isDisableUserModalOpen} closeModal={() => setIsDisableUserModalOpen(false)} title={{text: <span className='flex items-center gap-2'><FiLock /><span>Suspendre ce compte</span></span>, color: 'text-yellow-500'}}>
         <div className="my-5">
           <p className="text-sm text-gray-500">
@@ -249,13 +248,6 @@ export default function UserTableDataMenu({user, currentUser}) {
         </div>
 
         <div className="mt-4 flex text-sm justify-end">
-          {/* <button
-            type="button"
-            className="ml-auto inline-flex justify-center px-4 py-2 text-sm font-medium text-yellow-900 bg-yellow-100 border border-transparent rounded-md hover:bg-yellow-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-yellow-500"
-            onClick={onConfirmSwitchDisableUser}
-          >
-            Confirmer
-          </button> */}
           <Button variant={'warning'} onClick={onConfirmSwitchDisableUser}>
             Confirmer
           </Button>
@@ -269,13 +261,6 @@ export default function UserTableDataMenu({user, currentUser}) {
         </div>
 
         <div className="mt-4 flex text-sm justify-end">
-          {/* <button
-            type="button"
-            className="ml-auto inline-flex justify-center px-4 py-2 text-sm font-medium text-yellow-900 bg-yellow-100 border border-transparent rounded-md hover:bg-yellow-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-yellow-500"
-            onClick={onConfirmSwitchDisableUser}
-          >
-            Confirmer
-          </button> */}
           <Button variant={'warning'} onClick={onConfirmSwitchDisableUser}>
             Confirmer
           </Button>

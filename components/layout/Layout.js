@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import Header from './Header'
 import Sidebar from './Sidebar'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import { Toaster } from 'react-hot-toast'
 
 export default function Layout(props) {
 
@@ -25,19 +26,22 @@ export default function Layout(props) {
     }
 
     return(
-        <div className='flex bg-gray-50 h-full'>
-            {
-                session && status === 'authenticated' && 
-                <div className='relative w-60'>
-                    <Sidebar />
-                </div>
-            }
-            <div className='grow h-full flex flex-col'>
-                { session && status === 'authenticated' && <Header currentUser={currentUser} /> }
-                <div className="grow">
-                    {props.children}
+        <>
+            <div className='flex bg-gray-50 h-full'>
+                {
+                    session && status === 'authenticated' && 
+                    <div className='relative w-60'>
+                        <Sidebar />
+                    </div>
+                }
+                <div className='grow h-full flex flex-col'>
+                    { session && status === 'authenticated' && <Header currentUser={currentUser} /> }
+                    <div className="grow relative">
+                        {props.children}
+                    </div>
                 </div>
             </div>
-        </div>
+            <Toaster position="bottom-right" toastOptions={{duration: 3000}} />
+        </>
     )
 }
