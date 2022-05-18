@@ -1,21 +1,34 @@
 import { useSession } from 'next-auth/react'
 import { useAuthContext } from '../../store/authContext'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Header from './Header'
 import Sidebar from './Sidebar'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { Toaster } from 'react-hot-toast'
+import { useRouter } from 'next/router'
 
 export default function Layout(props) {
 
     const {data: session, status} = useSession()
     const { getCurrentUser, currentUser } = useAuthContext()
+    const [showLayout, setShowLayout] = useState(true)
+    const router = useRouter()
 
     useEffect(() => {
         if (session) {
             getCurrentUser()
         }
     }, [session])
+
+    useEffect(() => {
+        const pathArr = router.pathname.split('/')
+        pathArr.splice(0, 1)
+        if (pathArr[0] === 'auth' && pathArr[1] === 'verify-email') {
+            setShowLayout(false)
+        } else {
+            setShowLayout(true)
+        }
+    }, [router])
 
     if (status === 'loading') {
         return(
@@ -29,14 +42,14 @@ export default function Layout(props) {
         <>
             <div className='flex bg-gray-50 h-full'>
                 {
-                    session && status === 'authenticated' && 
+                    session && status === 'authenticated' && showLayout &&
                     <div className='relative w-60'>
                         <Sidebar />
                     </div>
                 }
                 <div className='grow h-full flex flex-col'>
-                    { session && status === 'authenticated' && <Header currentUser={currentUser} /> }
-                    <div className="grow relative">
+                    { session && status === 'authenticated' && showLayout && <Header currentUser={currentUser} /> }
+                    <div className="grow">
                         {props.children}
                     </div>
                 </div>

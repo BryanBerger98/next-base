@@ -6,6 +6,7 @@ import { FiAlertCircle, FiAtSign, FiSave } from "react-icons/fi";
 import PasswordFormModal from "./PasswordFormModal";
 import ButtonWithLoader from "../ui/ButtonWithLoader";
 import { updateAccount, updateEmail } from "../../packages/api/auth";
+import Button from "../ui/Button";
 
 async function updateUser({email, password, phone_number}) {
     try {

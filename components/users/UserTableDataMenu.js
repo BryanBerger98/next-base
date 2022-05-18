@@ -1,7 +1,7 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import { FiCheck, FiEdit, FiKey, FiLock, FiMoreVertical, FiSend, FiTrash, FiUnlock, FiX } from 'react-icons/fi'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import Modal from '../ui/Modal'
 import { useUsersContext } from '../../store/usersContext'
 import { useRouter } from 'next/router'
@@ -22,7 +22,7 @@ export default function UserTableDataMenu({user, currentUser}) {
     sendResetPasswordEmailToUser(user._id)
     .then(() => {
       toast.custom(
-        <div className='flex items-center gap-4 bg-indigo-500 text-gray-50 text-medium text-base px-5 py-3 rounded-md drop-shadow relative z-[60]'>
+        <div className='flex items-center gap-4 bg-indigo-500 text-gray-50 text-medium text-base px-5 py-3 rounded-md drop-shadow'>
           <FiSend /><span>Email envoyé !</span>
         </div>
       )

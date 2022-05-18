@@ -39,7 +39,7 @@ export default function ForgotPasswordPage() {
             await sendResetPasswordEmailToUserByEmail(email)
             setLoading(false)
             setEmailSent(true)
-            startCountDown(60);
+            startCountDown(60)
         } catch (err) {
             setLoading(false)
             if (err.response && err.response.data && err.response.data.code) {

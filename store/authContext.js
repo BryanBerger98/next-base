@@ -30,7 +30,7 @@ export default function AuthContextProvider(props) {
     }, [setCurrentUser])
 
     const dispatchCurrentUser = useCallback(async (user) => {
-        setCurrentUser(user)
+        setCurrentUser({...currentUser, ...user})
     }, [setCurrentUser])
 
     const contextValues = useMemo(() => ({

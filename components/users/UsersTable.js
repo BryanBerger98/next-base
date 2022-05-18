@@ -116,8 +116,8 @@ export default function UsersTable({searchString}) {
                                         }
                                         {
                                             user.disabled &&
-                                            <div className="absolute inset-0 bg-gray-50/75 flex justify-center items-center rounded-full">
-                                                <FiLock title='Compte désactivé' className="text-red-500 text-lg" />
+                                            <div className="absolute inset-0 bg-red-100/75 flex justify-center items-center rounded-full">
+                                                <FiLock title='Compte désactivé' className="text-red-500 text-xl" />
                                             </div>
                                         }
                                     </div>

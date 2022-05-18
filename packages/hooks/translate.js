@@ -34,6 +34,10 @@ const errors = {
             fr: 'Jeton invalide',
             en: 'Invalid token'
         },
+        'wrong-token': {
+            fr: 'Le jeton transmis ne correspond pas à l\'utilisateur connecté',
+            en: 'Provided token does not match the user'
+        },
         'user-not-found': {
             fr: 'Utilisateur inconnu',
             en: 'User not found'
@@ -53,6 +57,10 @@ const errors = {
         'email-already-in-use': {
             fr: 'Adresse email déjà attribuée',
             en: 'Email already in use'
+        },
+        'user-already-verified': {
+            fr: 'L\'email de cet utilisateur est déjà vérifié',
+            en: 'User email already verified'
         }
     },
     users: {

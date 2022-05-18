@@ -34,7 +34,7 @@ const defaultHeader = `<h1>Next-Base</h1>`
 
 export function sendAccountVerificationEmail(user, token) {
     return new Promise((resolve, reject) => {
-        const tokenLink = `${process.env.FRONT_URL}/auth/account-validation/${token.token}`;
+        const tokenLink = `${process.env.FRONT_URL}/auth/verify-email/${token.token}`;
         const htmlBody = `
         <table class="es-content" cellspacing="0" cellpadding="0" align="center" bgcolor="#ffffff">
             <tbody>
@@ -202,7 +202,7 @@ export function sendEmail(to, cc, bcc, subject, plainText, htmlBody, callback) {
     transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
             console.error('Error occurred. ' + err.message);
-            console.log(err);
+            console.error(err);
             callback(err, info);
             return process.exit(1);
         }

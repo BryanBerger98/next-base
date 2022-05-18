@@ -54,6 +54,31 @@ export async function sendResetPasswordEmailToUserByEmail(email) {
     }
 }
 
+export async function sendVerifyAccountEmailToUser() {
+    try {
+        const response = await axios.get(`${baseUrl}/verify-email`, {
+            withCredentials: true
+        })
+        return response.data  
+    } catch (error) {
+        throw error
+    }
+}
+
+export async function verifyEmail(token) {
+    try {
+        const response = await axios.put(`${baseUrl}/verify-email`, {token}, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            withCredentials: true
+        })
+        return response.data  
+    } catch (error) {
+        throw error
+    }
+}
+
 export async function updatePassword(oldPassword, newPassword) {
     try {
         const response = await axios.put(`${baseUrl}/update-password`, {newPassword, oldPassword}, {
