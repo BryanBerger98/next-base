@@ -27,10 +27,10 @@ export default function AccountProfilePhotoInput({ currentUser }) {
     }
 
     return(
-        <div className="bg-gray-50 rounded-full h-20 w-20 flex items-center justify-center text-3xl text-gray-800 my-auto relative overflow-hidden group">
+        <div className="bg-gray-50 rounded-full h-32 w-32 lg:h-20 lg:w-20 flex items-center justify-center text-3xl text-gray-800 my-auto relative overflow-hidden group">
             {
                 currentUser && currentUser.photo_url && currentUser.photo_url !== ''
-                ? <Image src={`/${currentUser.photo_url}`} alt={`${currentUser.username} profile photo`} width={80} height={80} />
+                ? <Image src={`/${currentUser.photo_url}`} alt={`${currentUser.username} profile photo`} layout='fill' />
                 : <FiUser />
             }
             {

@@ -36,13 +36,13 @@ export default function AccountInformationsSection({ currentUser }) {
 
     return(
         <>
-            <div className="bg-indigo-500 dark:bg-indigo-300 rounded-md p-6 text-gray-50 dark:text-gray-800 mb-4 flex gap-4">
-               <AccountProfilePhotoInput currentUser={currentUser} />
+            <div className="bg-indigo-500 dark:bg-indigo-400 rounded-md p-6 text-gray-50 dark:text-gray-800 mb-4 flex flex-wrap gap-4">
+                <AccountProfilePhotoInput currentUser={currentUser} />
                 <div className="my-auto">
                     <h2 className="text-2xl">{currentUser && currentUser.username ? currentUser.username : <span className="italic">Sans nom</span>}</h2>
                     <p className="text-indigo-200 dark:text-gray-700">{currentUser && getTranslatedRole(currentUser.role)}</p>
                 </div>
-                <div className="ml-auto mb-auto text-sm">
+                <div className="mx-auto lg:mr-0 mb-auto text-sm">
                     <Button variant={theme === 'dark' ? 'dark' : 'light'} onClick={() => setIsEditAccountInfosModalOpen(true)}>
                         <FiEdit />
                         <span>Modifier</span>

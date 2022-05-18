@@ -14,6 +14,7 @@ export default function Layout(props) {
     const { getCurrentUser, currentUser } = useAuthContext()
     const { theme, toggleTheme } = useThemeContext()
     const [showLayout, setShowLayout] = useState(true)
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false)
     const router = useRouter()
 
     useEffect(() => {
@@ -42,14 +43,6 @@ export default function Layout(props) {
         body.className = theme === 'dark' ? 'dark bg-gray-800' : 'bg-gray-50'
     }, [theme])
 
-    // if (status === 'loading') {
-    //     return(
-    //         <div className="absolute inset-0 z-50 bg-gray-50/30 flex items-center justify-center">
-    //             <AiOutlineLoading3Quarters className={`text-6xl text-indigo-500 animate-spin`} />
-    //         </div>
-    //     )
-    // }
-
     return(
         <div className={`h-full`}>
             {
@@ -61,12 +54,10 @@ export default function Layout(props) {
                     <div className='flex h-full'>
                         {
                             session && status === 'authenticated' && showLayout &&
-                            <div className='relative w-60'>
-                                <Sidebar />
-                            </div>
+                            <Sidebar setIsSidebarOpen={setIsSidebarOpen} isSidebarOpen={isSidebarOpen} />
                         }
                         <div className='grow h-full flex flex-col'>
-                            { session && status === 'authenticated' && showLayout && <Header currentUser={currentUser} /> }
+                            { session && status === 'authenticated' && showLayout && <Header currentUser={currentUser} isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} /> }
                             <div className="grow">
                                 {props.children}
                             </div>
