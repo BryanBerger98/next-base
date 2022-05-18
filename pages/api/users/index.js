@@ -44,7 +44,7 @@ export default async function handler(req, res) {
 
         const users = await User.find(searchRequest).skip(skip ? +skip : 0).limit(limit ? +limit : 1000).sort(sortParams)
         const count = users.length
-        const total = await User.find().count()
+        const total = await User.find(searchRequest).count()
 
         const result = {
             users,

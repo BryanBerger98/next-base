@@ -4,10 +4,12 @@ import UsersTable from "../../components/users/UsersTable"
 import SearchInput from "../../components/ui/SearchInput"
 import Button from "../../components/ui/Button"
 import { getSession } from "next-auth/react"
+import { useUsersContext } from "../../store/usersContext"
 
 export default function UsersPage() {
 
     const [searchString, setSearchString] = useState('')
+    const { usersTotal } = useUsersContext()
 
     const onSearchUsers = (value) => {
         setSearchString(value)
@@ -15,8 +17,7 @@ export default function UsersPage() {
 
     return(
         <div className="container mx-auto my-10 text-gray-800 px-5">
-            <h1 className="flex items-center gap-2 text-xl mb-5"><FiUsers /><span>Utilisateurs</span></h1>
-            <div className="w-full min-h-96 bg-white drop-shadow rounded-md p-3 text-sm">
+            <h1 className="flex items-center gap-2 text-xl mb-5"><FiUsers /><span>{usersTotal} Utilisateur{usersTotal > 1 ? 's' : ''}</span></h1>
                 <div className="grid grid-cols-12 mb-5">
                     <div className="col-span-6">
                         <SearchInput onSearchElements={onSearchUsers} />
@@ -28,6 +29,7 @@ export default function UsersPage() {
                         </Button>
                     </div>
                 </div>
+            <div className="w-full min-h-96 bg-white drop-shadow rounded-md p-3 text-sm">
                 <UsersTable searchString={searchString} />
             </div>
         </div>
