@@ -14,6 +14,7 @@ export default function Table({dataLoading, dataCount, fields, defaultLimit, def
 
     useEffect(() => {
         onReloadTable(limit, skip, sort)
+        localStorage.setItem('usersTableConfig', JSON.stringify({limit, skip, sort}))
     }, [limit, skip, sort])
 
     return(

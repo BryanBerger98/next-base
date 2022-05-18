@@ -12,9 +12,11 @@ export default function UsersTable({searchString}) {
 
     const { usersList, usersTotal, dispatchUsersData } = useUsersContext()
 
-    const [limit, setLimit] = useState(10)
-    const [skip, setSkip] = useState(0)
-    const [sort, setSort] = useState({field: 'created_on', direction: -1})
+    const localUsersTableConfig = JSON.parse(localStorage.getItem('usersTableConfig'))
+
+    const [limit, setLimit] = useState(localUsersTableConfig && localUsersTableConfig.limit ? localUsersTableConfig.limit : 10)
+    const [skip, setSkip] = useState(localUsersTableConfig && localUsersTableConfig.skip ? localUsersTableConfig.skip : 0)
+    const [sort, setSort] = useState(localUsersTableConfig && localUsersTableConfig.sort && localUsersTableConfig.sort.field ? localUsersTableConfig.sort : {field: 'created_on', direction: -1})
 
     const tableFields = [
         {
