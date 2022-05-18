@@ -1,13 +1,13 @@
 import { FiSearch } from "react-icons/fi"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import usePageTitleTranslator from '../../helpers/page-title-translator'
 import AccountDropDownMenu from "../account/AccountDropdownMenu"
+import useTranslate from "../../packages/hooks/translate"
 
 export default function Header({ currentUser }) {
 
     const [pageTitle, setPageTitle] = useState('')
-    const { getTranslatedTitle } = usePageTitleTranslator({locale: 'fr'})
+    const { getTranslatedTitle } = useTranslate({locale: 'fr'})
 
     const router = useRouter()
 

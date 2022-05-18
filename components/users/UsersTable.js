@@ -1,32 +1,12 @@
-import { FiArrowDown, FiArrowUp, FiCheckCircle, FiLock, FiRotateCw, FiUser } from "react-icons/fi"
+import { FiCheckCircle, FiLock, FiRotateCw, FiUser } from "react-icons/fi"
 import { getStringSlashedDateFromDate } from "../../utils/dates"
 import { useState, Fragment, useCallback, useEffect } from 'react'
-import axios from "axios"
-import TablePageSelector from "../ui/TablePageSelector"
 import UserTableDataMenu from "./UserTableDataMenu"
 import { getSession } from "next-auth/react"
 import { useUsersContext } from "../../store/usersContext"
 import Image from "next/image"
 import Table from "../ui/Table"
-
-async function getUsers(sort, skip, limit, searchString) {
-    try {
-        const response = await axios.get(`/api/users?sortField=${sort.field}&sortDirection=${sort.direction}&limit=${limit}&skip=${skip}${searchString && searchString.length > 0 ? '&search=' + searchString : ''}`, {
-            withCredentials: true
-        })
-        const users = response && response.data && response.data.users ? response.data.users : []
-        const count = response && response.data && response.data.count ? response.data.count : 0
-        const total = response && response.data && response.data.total ? response.data.total : 0 
-        
-        return {
-            users,
-            count,
-            total
-        }
-    } catch (error) {
-        throw error
-    }
-}
+import { getUsers } from "../../packages/api/users"
 
 export default function UsersTable({searchString}) {
 
@@ -34,7 +14,7 @@ export default function UsersTable({searchString}) {
 
     const [limit, setLimit] = useState(10)
     const [skip, setSkip] = useState(0)
-    const [sort, setSort] = useState({field: 'email', direction: -1})
+    const [sort, setSort] = useState({field: 'created_on', direction: -1})
 
     const tableFields = [
         {

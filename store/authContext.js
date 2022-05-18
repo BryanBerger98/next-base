@@ -1,6 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react'
-import { getSession } from 'next-auth/react'
-import axios from 'axios'
+import { getCurrentLoggedInUser } from '../packages/api/auth'
 
 const AuthContext = createContext(null)
 export { AuthContext }
@@ -22,9 +21,9 @@ export default function AuthContextProvider(props) {
 
     const getCurrentUser = useCallback(async () => {
         try {
-            const response = await axios.get('/api/auth/account')
-            setCurrentUser(response.data)
-            return response.data
+            const user = await getCurrentLoggedInUser()
+            setCurrentUser(user)
+            return user
         } catch (error) {
             throw error
         }

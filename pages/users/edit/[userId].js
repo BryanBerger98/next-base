@@ -10,7 +10,7 @@ export default function EditUserPage(props) {
     const [user, setUser] = useState(props.user)
 
     return(
-        <div className="container mx-auto my-10 text-gray-800">
+        <div className="container mx-auto my-10 text-gray-800 px-5">
             <div className="flex mb-5 text-sm">
                 <Link href={'/users'}>
                     <a className="py-2 rounded-md text-red-500 flex items-center gap-2 hover:underline">

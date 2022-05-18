@@ -1,10 +1,11 @@
-import axios from 'axios'
 import { Field, Form, Formik } from 'formik'
 import { FiAlertCircle, FiSend } from "react-icons/fi"
 import * as Yup from 'yup'
 import Button from '../../components/ui/Button'
-import { useState, useEffect } from 'react'
-import useErrorsTranslator from '../../helpers/errors-translator'
+import { useState } from 'react'
+import useTranslate from '../../packages/hooks/translate'
+import { sendResetPasswordEmailToUserByEmail } from '../../packages/api/auth'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
 export default function ForgotPasswordPage() {
 
@@ -13,7 +14,7 @@ export default function ForgotPasswordPage() {
     const [emailSent, setEmailSent] = useState(false)
     const [counter, setCounter] = useState(60)
 
-    const { getTranslatedError } = useErrorsTranslator({locale: 'fr'})
+    const { getTranslatedError } = useTranslate({locale: 'fr'})
 
     const ForgotPasswordFormSchema = Yup.object().shape({
         email: Yup.string().email('Email invalide').required('Champs requis')
@@ -35,12 +36,7 @@ export default function ForgotPasswordPage() {
         const { email } = values
         setLoading(true)
         try {
-            const response = await axios.post(`/api/auth/reset-password`, {email}, {
-                withCredentials: true,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
+            await sendResetPasswordEmailToUserByEmail(email)
             setLoading(false)
             setEmailSent(true)
             startCountDown(60);
@@ -81,11 +77,6 @@ export default function ForgotPasswordPage() {
                                 <Field name='email' type="email" className="p-2 rounded-lg border-[0.5px] border-gray-200 bg-gray-50" id="forgotPasswordEmailInput" placeholder="example@example.com" />
                                 {touched.email && errors.email && <span className='ml-2 flex items-center text-rose-500 absolute bottom-2 right-2'><span className='mr-1'>{errors.email}</span><FiAlertCircle /></span>}
                             </div>
-                            {/* <div className="flex flex-col justify-center align-center">
-                                <button className="px-4 py-2 mb-5 mx-auto bg-gradient-to-r from-indigo-700 to-indigo-500 text-gray-50 rounded-md" type="submit">
-                                    Envoyer
-                                </button>
-                            </div> */}
                             <div className="flex flex-col justify-center items-center text-sm">
                                 {error && <p className='text-sm text-red-500 mb-5'>{error}</p>}
                                 {   !emailSent &&

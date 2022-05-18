@@ -3,21 +3,10 @@ import { Fragment, useState } from 'react'
 import { FiCheck, FiEdit, FiKey, FiLock, FiMoreVertical, FiSend, FiTrash, FiUnlock, FiX } from 'react-icons/fi'
 import toast, { Toaster } from 'react-hot-toast'
 import Modal from '../ui/Modal'
-import axios from 'axios'
 import { useUsersContext } from '../../store/usersContext'
 import { useRouter } from 'next/router'
 import Button from '../ui/Button'
-
-async function sendResetPasswordEmailToUser(userId) {
-    try {
-        const response = await axios.get(`/api/users/reset-password/${userId}`, {
-            withCredentials: true
-        })
-        return response.data
-    } catch (error) {
-        throw error
-    }
-}
+import { deleteUserById, sendResetPasswordEmailToUser, switchDisabledUser } from '../../packages/api/users'
 
 export default function UserTableDataMenu({user, currentUser}) {
 
@@ -38,7 +27,14 @@ export default function UserTableDataMenu({user, currentUser}) {
         </div>
       )
     })
-    .catch(console.error)
+    .catch(error => {
+      toast.custom(
+        <div className='flex items-center gap-4 bg-red-500 text-gray-50 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>
+          <FiX /><span>Une erreur est survenue</span>
+        </div>
+      )
+      console.error(error)
+    })
   }
     
   const onSwitchDisableUser = () => {
@@ -47,11 +43,7 @@ export default function UserTableDataMenu({user, currentUser}) {
   }
 
   const onConfirmSwitchDisableUser = () => {
-    axios.get(`/api/users/switch-disabled/${user._id}`, {
-      headers: {
-        withCredentials: true
-      }
-    }).then(response => {
+    switchDisabledUser(user._id).then(() => {
       toast.custom(
         <div className='flex items-center gap-4 bg-gray-100 text-green-500 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>
           <FiCheck /><span>Modification enregistrée</span>
@@ -73,9 +65,7 @@ export default function UserTableDataMenu({user, currentUser}) {
 
   const onConfirmDeleteUser = async () => {
     try {
-      await axios.delete(`/api/users/${user._id}`, {
-          withCredentials: true
-      })
+      await deleteUserById(user._id)
       deleteUser(user._id)
       toast.custom(
         <div className='flex items-center gap-4 bg-gray-100 text-green-500 text-medium text-base px-5 py-3 rounded-xl drop-shadow-sm'>

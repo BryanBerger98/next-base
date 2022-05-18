@@ -1,3 +1,29 @@
+const titles = {
+    dashboard: {
+        fr: 'Tableau de bord',
+        en: 'Dashboard'
+    },
+    users: {
+        fr: 'Utilisateurs',
+        en: 'Users'
+    },
+    account: {
+        fr: 'Mon compte',
+        en: 'Account'
+    }
+}
+
+const roles = {
+    admin: {
+        fr: 'Administrateur',
+        en: 'Admin'
+    },
+    user: {
+        fr: 'Utilisateur',
+        en: 'User'
+    }
+}
+
 const errors = {
     auth: {
         'wrong-password': {
@@ -53,14 +79,55 @@ const errors = {
     }
 }
 
-export default function ErrorsTranslator(options) {
+/**
+ * Translator Hook
+ * @param {{locale: 'fr' | 'en'}} options 
+ * @returns {{
+ *  getTranslatedTitle: (title: string) => translatedTitle,
+ *  getTranslatedRole: (role: string) => translatedRole,
+ *  getTranslatedError: (errorCode: string) => translatedErrorMessage
+ * }}
+ */
+export default function useTranslate(options) {
 
     /**
+     * Returns translated title from english title
+     * @param {String} title 
+     * @returns {String} translatedTitle
+     */
+    function getTranslatedTitle(title) {
+        if (!title) {
+            throw new Error('Please set a title')
+        }
+        const locale = options && options.locale && options.locale !== '' ? options.locale : 'en'
+        if (!titles[title]) {
+            return 'Next-Base'
+        }
+        return titles[title][locale]
+    }
+
+    /**
+     * Returns translated role from english role
+     * @param {String} role 
+     * @returns {String} translatedRole
+     */
+    function getTranslatedRole(role) {
+        if (!role) {
+            throw new Error('Please set a role')
+        }
+        const locale = options && options.locale && options.locale !== '' ? options.locale : 'en'
+        if (!roles[role]) {
+            return ''
+        }
+        return roles[role][locale]
+    }
+
+     /**
      * Returns translated error message from error code
      * @param {String} errorCode 
      * @returns {String} errorMessage
      */
-    function getTranslatedError(errorCode) {
+      function getTranslatedError(errorCode) {
         if (!errorCode) {
             throw new Error('Please set an error code')
         }
@@ -74,6 +141,8 @@ export default function ErrorsTranslator(options) {
     }
 
     return {
+        getTranslatedTitle,
+        getTranslatedRole,
         getTranslatedError
     }
 

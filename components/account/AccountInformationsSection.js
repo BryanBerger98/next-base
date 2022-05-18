@@ -1,18 +1,18 @@
 import { FiAlertCircle, FiEdit, FiSave, FiUser } from "react-icons/fi";
-import useRolesTranslator from '../../helpers/roles-translator'
 import Button from "../ui/Button"
 import { useState } from 'react'
 import * as Yup from 'yup'
 import Modal from "../ui/Modal";
 import { Field, Form, Formik } from "formik";
-import axios from "axios";
 import { useAuthContext } from "../../store/authContext";
 import AccountProfilePhotoInput from "./AccountProfilePhotoInput";
+import useTranslate from "../../packages/hooks/translate";
+import { updateAccount } from "../../packages/api/auth";
 
 export default function AccountInformationsSection({ currentUser }) {
 
     const { dispatchCurrentUser } = useAuthContext()
-    const { getTranslatedRole } = useRolesTranslator({locale: 'fr'})
+    const { getTranslatedRole } = useTranslate({locale: 'fr'})
 
     const [isEditAccountInfosModalOpen, setIsEditAccountInfosModalOpen] = useState(false)
 
@@ -25,12 +25,7 @@ export default function AccountInformationsSection({ currentUser }) {
         try {
 
             setIsEditAccountInfosModalOpen(false)
-            const response = await axios.put(`/api/auth/account`, {username, phone_number: currentUser.phone_number}, {
-                withCredentials: true,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
+            await updateAccount({username})
             dispatchCurrentUser({...currentUser, username})
         } catch (error) {
             throw error

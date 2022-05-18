@@ -1,13 +1,13 @@
 import { Field, Form, Formik } from 'formik'
 import { FiAlertCircle, FiUserPlus } from "react-icons/fi"
 import * as Yup from 'yup'
-import axios from 'axios'
 import { useState } from 'react'
 import Button from '../../components/ui/Button'
-import useErrorsTranslator from '../../helpers/errors-translator'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
+import useTranslate from '../../packages/hooks/translate'
+import { signupUser } from '../../packages/api/auth'
 
 export default function SignupPage() {
 
@@ -16,7 +16,7 @@ export default function SignupPage() {
 
     const router = useRouter()
 
-    const { getTranslatedError } = useErrorsTranslator({locale: 'fr'})
+    const { getTranslatedError } = useTranslate({locale: 'fr'})
 
     const SignupFormSchema = Yup.object().shape({
         email: Yup.string().email('Email invalide').required('Champs requis'),
@@ -30,12 +30,7 @@ export default function SignupPage() {
         setLoading(true)
         setError(null)
         try {
-            const response = await axios.post(`/api/auth/signup`, {email, password}, {
-                withCredentials: true,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
+            await signupUser(email, password)
             const result = await signIn('credentials', {
                 redirect: false,
                 email,

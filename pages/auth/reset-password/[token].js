@@ -1,12 +1,12 @@
 import { useRouter } from "next/router"
 import * as Yup from 'yup'
 import { Formik, Form, Field } from "formik"
-import axios from "axios"
 import { FiAlertCircle, FiCheckCircle, FiLogIn, FiSave } from "react-icons/fi"
 import { useState } from 'react'
-import useErrorsTranslator from '../../../helpers/errors-translator'
 import Button from "../../../components/ui/Button"
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
+import useTranslate from "../../../packages/hooks/translate"
+import { resetPassword } from "../../../packages/api/auth"
 
 export default function ResetPasswordPage() {
 
@@ -15,7 +15,7 @@ export default function ResetPasswordPage() {
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(null)
 
-    const { getTranslatedError } = useErrorsTranslator({locale: 'fr'})
+    const { getTranslatedError } = useTranslate({locale: 'fr'})
 
     const { token } = router.query
 
@@ -28,12 +28,7 @@ export default function ResetPasswordPage() {
         const { password } = values
         setLoading(true)
 
-        axios.put(`/api/auth/reset-password`, {token, password}, {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(response => {
+       resetPassword(token, password).then(response => {
             setSuccess(true)
             setTimeout(() => {
                 router.replace('/auth/signin')

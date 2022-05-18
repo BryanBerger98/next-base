@@ -1,30 +1,20 @@
 import { Formik, Field, Form } from "formik";
 import * as Yup from 'yup'
-import { useState, useEffect, Fragment } from 'react'
-import axios from "axios";
+import { useState, Fragment } from 'react'
 import { useAuthContext } from "../../store/authContext";
 import { FiAlertCircle, FiAtSign, FiSave } from "react-icons/fi";
 import PasswordFormModal from "./PasswordFormModal";
 import ButtonWithLoader from "../ui/ButtonWithLoader";
+import { updateAccount, updateEmail } from "../../packages/api/auth";
 
 async function updateUser({email, password, phone_number}) {
     try {
         if (email && password) {
-            const response = await axios.put('/api/auth/update-email', {email, password}, {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                withCredentials: true
-            })
+            await updateEmail(email, password)
         }
     
         if (phone_number) {
-            const response = await axios.put('/api/auth/account', {phone_number}, {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                withCredentials: true
-            })
+            await updateAccount({phone_number})
         }
     
         return

@@ -3,9 +3,9 @@ import { Formik, Form, Field, FastField } from "formik"
 import * as Yup from 'yup'
 import { FiAlertCircle, FiSave } from "react-icons/fi"
 import DebouncedField from "../ui/DebouncedField"
-import axios from "axios"
 import { useRouter } from "next/router"
 import ButtonWithLoader from "../ui/ButtonWithLoader"
+import { createUser, updateUser } from '../../packages/api/users'
 
 export default function EditUserForm({user, setUser}) {
 
@@ -24,37 +24,21 @@ export default function EditUserForm({user, setUser}) {
     const handleSubmit = useCallback(async (values) => {
         setSaving(true)
         setErrorCode(null)
-        if (user) {
-            axios.put('/api/users', {...user, ...values}, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(response => {
-                setSaving(false)
-            }).catch(error => {
-                setSaving(false)
-                if (error.response && error.response.data && error.response.data.code) {
-                    setErrorCode(error.response.data.code)
-                    return
-                }
-                console.error(error)
-            })
-        } else {
-            axios.post('/api/users', {...values}, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(response => {
-                setSaving(false)
-                router.push(`edit/${response.data._id}`)
-            }).catch(error => {
-                setSaving(false)
-                if (error.response && error.response.data && error.response.data.code) {
-                    setErrorCode(error.response.data.code)
-                    return
-                }
-                console.error(error)
-            })
+        try {
+            if (user) {
+                await updateUser({...user, ...values})
+            } else {
+                const response = await createUser({...values})
+                router.push(`edit/${response._id}`)
+            }
+            setSaving(false)
+        } catch (error) {
+            setSaving(false)
+            if (error.response && error.response.data && error.response.data.code) {
+                setErrorCode(error.response.data.code)
+                return
+            }
+            console.error(error)
         }
     }, [user, setUser, setSaving])
 

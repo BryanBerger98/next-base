@@ -1,9 +1,9 @@
 import { FiUser } from "react-icons/fi"
 import { useRef, useState } from 'react'
-import axios from "axios"
 import { useAuthContext } from '../../store/authContext'
 import Image from "next/image"
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
+import { updateAvatar } from "../../packages/api/auth"
 
 export default function AccountProfilePhotoInput({ currentUser }) {
 
@@ -15,14 +15,7 @@ export default function AccountProfilePhotoInput({ currentUser }) {
         try {
             setSaving(true)
             const file = fileInputRef.current.files[0]
-            const formData = new FormData()
-            formData.append('avatar', file)
-            const response = await axios.put('/api/auth/account/avatar', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-            const fileData = response.data
+            const fileData = await updateAvatar(file)
             dispatchCurrentUser({
                 ...currentUser,
                 photo_url: fileData.path

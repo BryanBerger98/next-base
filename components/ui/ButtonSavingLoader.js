@@ -1,12 +1,12 @@
 import { Fragment, useState, useEffect } from 'react'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { FiCheck, FiX } from 'react-icons/fi'
-import useErrorsTranslator from '../../helpers/errors-translator'
+import useTranslate from '../../packages/hooks/translate'
 
 export default function ButtonSavingLoader({ saving, saved, error, loaderOrientation, displayErrorMessage }) {
 
     const [errorMessage, setErrorMessage] = useState(null)
-    const { getTranslatedError } = useErrorsTranslator({ locale: 'fr' })
+    const { getTranslatedError } = useTranslate({ locale: 'fr' })
 
     useEffect(() => {
         if (error && displayErrorMessage) {

@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { FiAlertCircle, FiLock, FiSave } from 'react-icons/fi'
-import Button from '../ui/Button'
 import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
-import axios from 'axios'
 import ButtonWithLoader from '../ui/ButtonWithLoader'
+import { updatePassword } from '../../packages/api/auth'
 
 export default function AccountChangePasswordForm() {
 
@@ -31,12 +30,7 @@ export default function AccountChangePasswordForm() {
         setFormValues(values)
 
         try {
-            await axios.put('/api/auth/update-password', {newPassword, oldPassword}, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                withCredentials: true
-            })
+            await updatePassword(oldPassword, newPassword)
             setSaving(false)
         } catch (error) {
             setSaving(false)
