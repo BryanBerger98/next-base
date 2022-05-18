@@ -106,7 +106,7 @@ export default function UsersTable({searchString}) {
                 {
                     usersList && usersList.map((user, index) => (
                         <tr key={user._id + '-' + index} className={`${user.disabled ? 'text-gray-400' : ''}`}>
-                            <td className="py-3 border-b-[0.5px] border-gray-300">
+                            <td className="py-3 border-b-[0.5px] border-gray-300 dark:border-gray-700">
                                 <span className="flex items-center gap-2">
                                     <div className="h-10 w-10 rounded-full drop-shadow bg-indigo-500 text-gray-50 flex justify-center items-center text-lg overflow-hidden relative">
                                         {
@@ -116,30 +116,30 @@ export default function UsersTable({searchString}) {
                                         }
                                         {
                                             user.disabled &&
-                                            <div className="absolute inset-0 bg-red-100/75 flex justify-center items-center rounded-full">
-                                                <FiLock title='Compte désactivé' className="text-red-500 text-xl" />
+                                            <div className="absolute inset-0 bg-red-100/75 dark:bg-red-800/75 flex justify-center items-center rounded-full">
+                                                <FiLock title='Compte désactivé' className="text-red-500 dark:text-red-50 text-xl" />
                                             </div>
                                         }
                                     </div>
                                     {user.username && user.username.length > 0 ? <span>{user.username}</span> : <span className="italic text-gray-400">Sans nom</span>}
                                 </span>
                             </td>
-                            <td className="py-3 border-b-[0.5px] border-gray-300">
+                            <td className="py-3 border-b-[0.5px] border-gray-300 dark:border-gray-700">
                                 <span className="flex items-center gap-1">
                                     <span>{user.email}</span>
-                                    {user.email_verified ? <FiCheckCircle title='Compte vérifié' className="text-green-600" /> : <FiRotateCw title="En attente de vérification" className="text-yellow-600" />}
+                                    {user.email_verified ? <FiCheckCircle title='Compte vérifié' className="text-green-600 dark:text-green-400" /> : <FiRotateCw title="En attente de vérification" className="text-yellow-600 dark:text-yellow-300" />}
                                 </span>
                             </td>
-                            <td className="py-3 border-b-[0.5px] border-gray-300">
+                            <td className="py-3 border-b-[0.5px] border-gray-300 dark:border-gray-700">
                                 {user.phone_number && user.phone_number.length > 0 ? <span>{user.phone_number}</span> : ''}
                             </td>
-                            <td className="py-2 border-b-[0.5px] border-gray-300">
+                            <td className="py-2 border-b-[0.5px] border-gray-300 dark:border-gray-700">
                                 {user.role === 'admin' ? 'Administrateur' : user.role === 'user' ? 'Utilisateur' : ''}
                             </td>
-                            <td className="py-2 border-b-[0.5px] border-gray-300">
+                            <td className="py-2 border-b-[0.5px] border-gray-300 dark:border-gray-700">
                                 {user.created_on && getStringSlashedDateFromDate(new Date(user.created_on), 'fr')}
                             </td>
-                            <td className="py-2 border-b-[0.5px] border-gray-300 text-center">
+                            <td className="py-2 border-b-[0.5px] border-gray-300 dark:border-gray-700 text-center">
                                 <UserTableDataMenu user={user} currentUser={currentUser} />
                             </td>
                         </tr>

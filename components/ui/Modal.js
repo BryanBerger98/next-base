@@ -10,7 +10,7 @@ export default function Modal({isOpen, closeModal, title, children}) {
           className="fixed inset-0 z-[9999] overflow-y-auto"
           onClose={closeModal}
         >
-          <div className="min-h-screen px-4 text-center bg-slate-800/30">
+          <div className="min-h-screen px-4 text-center bg-gray-800/30 dark:bg-gray-600/50">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -37,7 +37,7 @@ export default function Modal({isOpen, closeModal, title, children}) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-slate-50 shadow-xl rounded-lg">
+              <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-gray-50 dark:bg-gray-900 shadow-xl rounded-lg">
                 <Dialog.Title
                   as="h3"
                   className={`text-lg font-medium leading-6 ${title && title.color && title.color !== '' ? title.color : 'text-gray-900' }`}

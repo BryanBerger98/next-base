@@ -8,6 +8,7 @@ import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import useTranslate from '../../packages/hooks/translate'
 import { signupUser } from '../../packages/api/auth'
+import ThemeToggleSwitch from '../../components/ui/ThemeToggleSwitch'
 
 export default function SignupPage() {
 
@@ -58,56 +59,61 @@ export default function SignupPage() {
     }
 
     return(
-        <div className='flex justify-center items-center h-screen bg-gray-50'>
+        <div className='flex justify-center items-center h-screen'>
             {
                 loading &&
                 <div className="absolute inset-0 z-50 bg-gray-50/30 flex items-center justify-center">
                     <AiOutlineLoading3Quarters className={`text-6xl text-indigo-500 ${loading && 'animate-spin'}`} />
                 </div>
             }
-            <div className="w-11/12 md:w-1/2 lg:w-1/3 xl:w-1/4 bg-white drop-shadow rounded-md p-6">
-                <h1 className='text-indigo-500 text-center text-3xl mb-3'>Next-Base</h1>
-                <h2 className='text-gray-500 text-center text-2xl mb-5'>Inscription</h2>
-                <Formik
-                    initialValues={{
-                        email: '',
-                        password: '',
-                        confirmPassword: ''
-                    }}
-                    validationSchema={SignupFormSchema}
-                    onSubmit={handleSignupFormSubmit}
-                >
-                    {({errors, touched}) => (
-                        <Form>
-                            <div className="flex flex-col mb-3 text-sm relative">
-                                <label htmlFor="signupEmailInput" className="text-gray-600 mb-1 ml-1">Adresse email <span className="text-rose-500">*</span></label>
-                                <Field name='email' type="email" className="p-2 rounded-lg border-[0.5px] border-gray-200 bg-gray-50" id="signupEmailInput" placeholder="example@example.com" />
-                                {touched.email && errors.email && <span className='ml-2 flex items-center text-rose-500 absolute bottom-2 right-2'><span className='mr-1'>{errors.email}</span><FiAlertCircle /></span>}
-                            </div>
-                            <div className="flex flex-col mb-3 text-sm relative">
-                                <label htmlFor="signupPasswordInput" className="text-gray-600 mb-1 ml-1">Mot de passe <span className="text-rose-500">*</span></label>
-                                <Field name="password" type="password" className="p-2 rounded-lg border-[0.5px] border-gray-200 bg-gray-50" id="signupPasswordInput" placeholder="********" />
-                                {touched.password && errors.password && <span className='ml-2 flex items-center text-rose-500 absolute bottom-2 right-2'><span className='mr-1'>{errors.password}</span><FiAlertCircle /></span>}
-                            </div>
-                            <div className="flex flex-col mb-5 text-sm relative">
-                                <label htmlFor="signupConfirmPasswordInput" className="text-gray-600 mb-1 ml-1">Confirmez le mot de passe <span className="text-rose-500">*</span></label>
-                                <Field name="confirmPassword" type="password" className="p-2 rounded-lg border-[0.5px] border-gray-200 bg-gray-50" id="signupConfirmPasswordInput" placeholder="********" />
-                                {touched.confirmPassword && errors.confirmPassword && <span className='ml-2 flex items-center text-rose-500 absolute bottom-2 right-2'><span className='mr-1'>{errors.confirmPassword}</span><FiAlertCircle /></span>}
-                            </div>
-                             <div className="flex flex-col justify-center items-center text-sm">
-                                {error && <p className='text-sm text-red-500 mb-5'>{error}</p>}
-                                <Button variant={'primary-gradient'} type='submit'>
-                                    <FiUserPlus />
-                                    <span>Inscription</span>
-                                </Button>
-                                <Button variant={'link'} href='/auth/signin'>
-                                    Déjà un compte ? Se connecter
-                                </Button>
-                            </div>
-                        </Form>
-                    )}
-                </Formik>
-            </div>
+            <>
+                <div className='absolute top-5 right-5'>
+                    <ThemeToggleSwitch />
+                </div>
+                <div className="w-11/12 md:w-1/2 lg:w-1/3 xl:w-1/4 bg-white dark:bg-gray-900 dark:text-gray-200 drop-shadow rounded-md p-6">
+                    <h1 className='text-indigo-500 dark:text-indigo-300 text-center text-3xl mb-3'>Next-Base</h1>
+                    <h2 className='text-gray-500 dark:text-gray-400 text-center text-2xl mb-5'>Inscription</h2>
+                    <Formik
+                        initialValues={{
+                            email: '',
+                            password: '',
+                            confirmPassword: ''
+                        }}
+                        validationSchema={SignupFormSchema}
+                        onSubmit={handleSignupFormSubmit}
+                    >
+                        {({errors, touched}) => (
+                            <Form>
+                                <div className="flex flex-col mb-3 text-sm relative">
+                                    <label htmlFor="signupEmailInput" className="mb-1 ml-1">Adresse email <span className="text-rose-500">*</span></label>
+                                    <Field name='email' type="email" className="p-2 rounded-md bg-gray-100 shadow-inner dark:bg-gray-700" id="signupEmailInput" placeholder="example@example.com" />
+                                    {touched.email && errors.email && <span className='ml-2 flex items-center text-rose-500 absolute bottom-2 right-2'><span className='mr-1'>{errors.email}</span><FiAlertCircle /></span>}
+                                </div>
+                                <div className="flex flex-col mb-3 text-sm relative">
+                                    <label htmlFor="signupPasswordInput" className="mb-1 ml-1">Mot de passe <span className="text-rose-500">*</span></label>
+                                    <Field name="password" type="password" className="p-2 rounded-md bg-gray-100 shadow-inner dark:bg-gray-700" id="signupPasswordInput" placeholder="********" />
+                                    {touched.password && errors.password && <span className='ml-2 flex items-center text-rose-500 absolute bottom-2 right-2'><span className='mr-1'>{errors.password}</span><FiAlertCircle /></span>}
+                                </div>
+                                <div className="flex flex-col mb-5 text-sm relative">
+                                    <label htmlFor="signupConfirmPasswordInput" className="mb-1 ml-1">Confirmez le mot de passe <span className="text-rose-500">*</span></label>
+                                    <Field name="confirmPassword" type="password" className="p-2 rounded-md bg-gray-100 shadow-inner dark:bg-gray-700" id="signupConfirmPasswordInput" placeholder="********" />
+                                    {touched.confirmPassword && errors.confirmPassword && <span className='ml-2 flex items-center text-rose-500 absolute bottom-2 right-2'><span className='mr-1'>{errors.confirmPassword}</span><FiAlertCircle /></span>}
+                                </div>
+                                <div className="flex flex-col justify-center items-center text-sm">
+                                    {error && <p className='text-sm text-red-500 mb-5'>{error}</p>}
+                                    <Button variant={'primary-gradient'} type='submit'>
+                                        <FiUserPlus />
+                                        <span>Inscription</span>
+                                    </Button>
+                                    <Button variant={'link'} href='/auth/signin'>
+                                        Déjà un compte ? Se connecter
+                                    </Button>
+                                </div>
+                            </Form>
+                        )}
+                    </Formik>
+                </div>
+            </>
         </div>
     )
 }

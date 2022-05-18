@@ -18,12 +18,12 @@ export default function AccountPage() {
             { currentUser && !currentUser.email_verified && <AccountEmailVerification />  }
             <div className="grid grid-cols-12 gap-4">
                 <div className="col-span-6">
-                    <div className="h-full bg-white rounded-md drop-shadow p-5 text-sm">
+                    <div className="h-full bg-white dark:bg-gray-900 dark:text-gray-200 rounded-md drop-shadow p-5 text-sm">
                         <AccountContactInformationsForm  currentUser={currentUser} />
                     </div>
                 </div>
                 <div className="col-span-6">
-                    <div className="h-full bg-white rounded-md drop-shadow p-5 flex flex-col text-sm">
+                    <div className="h-full bg-white dark:bg-gray-900 dark:text-gray-200 rounded-md drop-shadow p-5 flex flex-col text-sm">
                         <AccountChangePasswordForm />
                     </div>
                 </div>

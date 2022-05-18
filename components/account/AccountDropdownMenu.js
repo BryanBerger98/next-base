@@ -33,13 +33,13 @@ export default function AccountDropDownMenu({currentUser}) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
         >
-        <Menu.Items className="absolute right-0 w-60 mt-2 origin-top-right bg-gray-100 divide-y divide-gray-300/25 rounded-lg drop-shadow-md focus:outline-none">
+        <Menu.Items className="absolute right-0 w-60 mt-2 origin-top-right bg-gray-100 dark:bg-gray-800 divide-y divide-gray-300/25 rounded-lg drop-shadow-md focus:outline-none">
             <div className="px-1 py-1">
                 <Menu.Item>
                     {({ active }) => (
                     <button
                         className={`${
-                        active ? 'bg-indigo-500 text-white' : 'text-gray-900'
+                        active ? 'bg-indigo-500 text-white dark:bg-indigo-300 dark:text-gray-700' : 'text-gray-900 dark:text-gray-200'
                         } group flex rounded-lg items-center w-full px-2 py-2 text-sm`}
                         onClick={() => {router.push('/account')}}
                     >
@@ -50,7 +50,7 @@ export default function AccountDropDownMenu({currentUser}) {
                         />
                         ) : (
                         <FiUser
-                            className="w-5 h-5 mr-2 text-indigo-500"
+                            className="w-5 h-5 mr-2 text-indigo-500 dark:text-indigo-300"
                             aria-hidden="true"
                         />
                         )}
@@ -62,7 +62,7 @@ export default function AccountDropDownMenu({currentUser}) {
                     {({ active }) => (
                     <button
                         className={`${
-                        active ? 'bg-indigo-500 text-white' : 'text-gray-900'
+                        active ? 'bg-indigo-500 text-white dark:bg-indigo-300 dark:text-gray-700' : 'text-gray-900 dark:text-gray-200'
                         } group flex rounded-lg items-center w-full px-2 py-2 text-sm`}
                         onClick={() => {router.push('users/edit/'+user._id)}}
                     >
@@ -73,7 +73,7 @@ export default function AccountDropDownMenu({currentUser}) {
                         />
                         ) : (
                         <FiSettings
-                            className="w-5 h-5 mr-2 text-indigo-500"
+                            className="w-5 h-5 mr-2 text-indigo-500 dark:text-indigo-300"
                             aria-hidden="true"
                         />
                         )}
@@ -87,7 +87,7 @@ export default function AccountDropDownMenu({currentUser}) {
                 {({ active }) => (
                     <button
                     className={`${
-                        active ? 'bg-rose-500 text-white' : 'text-gray-900'
+                        active ? 'bg-rose-500 text-white dark:bg-red-300 dark:text-gray-700' : 'text-gray-900 dark:text-gray-200'
                     } group flex rounded-lg items-center w-full px-2 py-2 text-sm`}
                     onClick={logoutHandler}
                     >
@@ -98,7 +98,7 @@ export default function AccountDropDownMenu({currentUser}) {
                         />
                     ) : (
                         <FiLogOut
-                        className="w-5 h-5 mr-2 text-rose-500"
+                        className="w-5 h-5 mr-2 text-rose-500 dark:text-rose-300"
                         aria-hidden="true"
                         />
                     )}

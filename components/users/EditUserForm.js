@@ -60,39 +60,39 @@ export default function EditUserForm({user, setUser}) {
             {({errors, touched, handleChange, values}) => (
                 <Form className="text-sm">
                     <div className="flex flex-col mb-3 text-sm relative">
-                        <label htmlFor="userNameInput" className="text-slate-600 mb-1 ml-1">{'Nom d\'utilisateur'}</label>
+                        <label htmlFor="userNameInput" className="text-gray-600 dark:text-gray-300 mb-1 ml-1">{'Nom d\'utilisateur'}</label>
                         <FastField name='username' >
                             {({ field }) => (
-                                <DebouncedField type="text" value={values.username} onChange={handleChange} {...field} className="p-2 rounded-lg border-[0.5px] border-slate-200 bg-slate-50" id="userNameInput" placeholder="Nom d'utilisateur" />
+                                <DebouncedField type="text" value={values.username} onChange={handleChange} {...field} className="p-2 rounded-md bg-gray-100 dark:bg-gray-700 shadow-inner" id="userNameInput" placeholder="Nom d'utilisateur" />
                             )}
                         </FastField>
                         {touched.username && errors.username && <span className='ml-2 flex items-center text-rose-500 absolute bottom-2 right-2'><span className='mr-1'>{errors.username}</span><FiAlertCircle /></span>}
                     </div>
                     <div className="flex gap-2 flex-wrap">
                         <div className="grow flex flex-col mb-3 text-sm relative">
-                            <label htmlFor="userEmailInput" className="text-slate-600 mb-1 ml-1">Adresse email <span className="text-rose-500">*</span></label>
-                            <FastField name='email' >
+                            <label htmlFor="userEmailInput" className="text-gray-600 dark:text-gray-300 mb-1 ml-1">Adresse email <span className="text-rose-500">*</span></label>
+                            <FastField name='email'>
                                 {({ field }) => (
-                                    <DebouncedField type="email" value={values.email} onChange={handleChange} className="p-2 rounded-lg border-[0.5px] border-slate-200 bg-slate-50" id="userEmailInput" placeholder="example@example.com" {...field} />
+                                    <DebouncedField type="email" value={values.email} onChange={handleChange} className="p-2 rounded-md bg-gray-100 dark:bg-gray-700 shadow-inner" id="userEmailInput" placeholder="example@example.com" {...field} />
                                 )}
                             </FastField>
                             {touched.email && errors.email && <span className='ml-2 flex items-center text-rose-500 absolute bottom-2 right-2'><span className='mr-1'>{errors.email}</span><FiAlertCircle /></span>}
                         </div>
                         <div className="grow flex flex-col mb-3 text-sm relative">
-                            <label htmlFor="userPhoneNumberInput" className="text-slate-600 mb-1 ml-1">Téléphone</label>
+                            <label htmlFor="userPhoneNumberInput" className="text-gray-600 dark:text-gray-300 mb-1 ml-1">Téléphone</label>
                             <FastField name='phone_number' >
                                 {({ field }) => (
-                                    <DebouncedField type="tel" value={values.phone_number} onChange={handleChange} className="p-2 rounded-lg border-[0.5px] border-slate-200 bg-slate-50" id="userEmailInput" placeholder="+33 6 01 02 03 04" {...field} />
+                                    <DebouncedField type="tel" value={values.phone_number} onChange={handleChange} className="p-2 rounded-md bg-gray-100 dark:bg-gray-700 shadow-inner" id="userEmailInput" placeholder="+33 6 01 02 03 04" {...field} />
                                 )}
                             </FastField>
                             {touched.phone_number && errors.phone_number && <span className='ml-2 flex items-center text-rose-500 absolute bottom-2 right-2'><span className='mr-1'>{errors.phone_number}</span><FiAlertCircle /></span>}
                         </div>
                     </div>
                     <div className="flex flex-col mb-5 text-sm relative">
-                        <label htmlFor="userRoleSelect" className="text-slate-600 mb-1 ml-1">Rôle <span className="text-rose-500">*</span></label>
+                        <label htmlFor="userRoleSelect" className="text-gray-600 dark:text-gray-300 mb-1 ml-1">Rôle <span className="text-rose-500">*</span></label>
                         <FastField name="role">
                             {({field}) => (
-                                <Field as="select" id='userRoleSelect' className="appearance-none p-2 rounded-lg border-[0.5px] border-slate-200 bg-slate-50" {...field}>
+                                <Field as="select" id='userRoleSelect' className="appearance-none p-2 rounded-md bg-gray-100 dark:bg-gray-700 shadow-inner" {...field}>
                                     <option value="admin">Administrateur</option>
                                     <option value="user">Utilisateur</option>
                                 </Field>

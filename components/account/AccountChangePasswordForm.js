@@ -64,17 +64,17 @@ export default function AccountChangePasswordForm() {
                     </h3>
                     <div className="flex flex-col mb-3 relative">
                         <label htmlFor="oldPasswordChangePasswordInput" className="mb-1">Mot de passe actuel</label>
-                        <Field type="password" name="oldPassword" id="oldPasswordChangePasswordInput" placeholder="********" className="bg-gray-100 placeholder:text-gray-400 p-2 rounded-md" />
+                        <Field type="password" name="oldPassword" id="oldPasswordChangePasswordInput" placeholder="********" className="bg-gray-100 placeholder:text-gray-400 dark:bg-gray-700 dark:text-gray-50 p-2 rounded-md shadow-inner" />
                         {touched.oldPassword && errors.oldPassword && <span className='ml-2 flex items-center text-rose-500 absolute bottom-2 right-2'><span className='mr-1'>{errors.oldPassword}</span><FiAlertCircle /></span>}
                     </div>
                     <div className="flex flex-col text-sm mb-3 relative">
                         <label htmlFor="newPasswordChangePasswordInput" className="mb-1">Nouveau mot de passe</label>
-                        <Field type="password" name="newPassword" id="newPasswordChangePasswordInput" placeholder="********" className="bg-gray-100 placeholder:text-gray-400 p-2 rounded-md" />
+                        <Field type="password" name="newPassword" id="newPasswordChangePasswordInput" placeholder="********" className="bg-gray-100 placeholder:text-gray-400 dark:bg-gray-700 dark:text-gray-50 p-2 rounded-md shadow-inner" />
                         {touched.newPassword && errors.newPassword && <span className='ml-2 flex items-center text-rose-500 absolute bottom-2 right-2'><span className='mr-1'>{errors.newPassword}</span><FiAlertCircle /></span>}
                     </div>
                     <div className="flex flex-col text-sm mb-5 relative">
                         <label htmlFor="confirmNewPasswordChangePasswordInput" className="mb-1">Confirmer le mot de passe</label>
-                        <Field type="password" name="confirmNewPassword" id="confirmNewPasswordChangePasswordInput" placeholder="********" className="bg-gray-100 placeholder:text-gray-400 p-2 rounded-md" />
+                        <Field type="password" name="confirmNewPassword" id="confirmNewPasswordChangePasswordInput" placeholder="********" className="bg-gray-100 placeholder:text-gray-400 dark:bg-gray-700 dark:text-gray-50 p-2 rounded-md shadow-inner" />
                         {touched.confirmNewPassword && errors.confirmNewPassword && <span className='ml-2 flex items-center text-rose-500 absolute bottom-2 right-2'><span className='mr-1'>{errors.confirmNewPassword}</span><FiAlertCircle /></span>}
                     </div>
                     <div className="mt-auto mr-auto">

@@ -35,8 +35,8 @@ export default function PasswordFormModal({isOpen, setIsOpen, submitFunction, er
                     {({errors, touched}) => (
                         <Form>
                             <div className="flex flex-col mb-3 text-sm relative">
-                                <label htmlFor="accountUsernameInput" className="mb-1">Mot de passe</label>
-                                <Field type="password" name="password" id="accountUsernameInput" placeholder="Ex: John DOE" className="bg-gray-100 placeholder:text-gray-400 p-2 rounded-md" />
+                                <label htmlFor="accountUsernameInput" className="mb-1 dark:text-gray-200">Mot de passe</label>
+                                <Field type="password" name="password" id="accountUsernameInput" placeholder="Ex: John DOE" className="bg-gray-100 placeholder:text-gray-400 dark:text-gray-50 dark:bg-gray-700 shadow-inner p-2 rounded-md" />
                                 {touched.password && errors.password && <span className='ml-2 flex items-center text-rose-500 absolute bottom-2 right-2'><span className='mr-1'>{errors.password}</span><FiAlertCircle /></span>}
                             </div>
                             <div className="mt-4 flex flex-row text-sm justify-end items-center gap-2">

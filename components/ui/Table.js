@@ -25,14 +25,14 @@ export default function Table({dataLoading, dataCount, fields, defaultLimit, def
                         {
                             fields.map((field, index) => (
                                 field.sortable ?
-                                <th key={field.name + '-' + index} className={`text-center font-${field.fontStyle ? field.fontStyle : 'semibold'} border-b border-gray-400 py-2 hover:cursor-pointer`} onClick={() => onChangeSort(field.name, sort.direction === 1 ? -1 : 1)}>
+                                <th key={field.name + '-' + index} className={`text-center font-${field.fontStyle ? field.fontStyle : 'semibold'} border-b border-gray-400 dark:border-gray-700 py-2 hover:cursor-pointer`} onClick={() => onChangeSort(field.name, sort.direction === 1 ? -1 : 1)}>
                                     <span className={`flex gap-1 items-center justify-${field.align === 'left' ? 'start' : field.align === 'right' ? 'end' : 'center'}`}>
                                         <span>{field.title}</span>
                                         {sort.field === field.name && sort.direction === 1 && <FiArrowUp />}
                                         {sort.field === field.name && sort.direction === -1 && <FiArrowDown />}
                                     </span>
                                 </th>
-                                : <th key={field.name + '-' + index} className={`font-${field.fontStyle ? field.fontStyle : 'semibold'} border-b border-gray-400 py-2`}>
+                                : <th key={field.name + '-' + index} className={`font-${field.fontStyle ? field.fontStyle : 'semibold'} border-b border-gray-400 dark:border-gray-700 py-2`}>
                                     <span className={`flex gap-1 items-center justify-${field.align === 'left' ? 'start' : field.align === 'right' ? 'end' : 'center'}`}>
                                         <span>{field.title}</span>
                                     </span>
@@ -47,33 +47,33 @@ export default function Table({dataLoading, dataCount, fields, defaultLimit, def
                         dataLoading &&
                         Array.from(Array(limit), (element, index) => (
                             <tr className="animate-pulse" key={'table-pulse' + element + index}>
-                                <td className="py-3 border-b-[0.5px] border-gray-300">
-                                    <div className="w-44 bg-gray-300 h-5 rounded-md">
+                                <td className="py-3 border-b-[0.5px] border-gray-300 dark:border-gray-700">
+                                    <div className="w-44 bg-gray-300 dark:bg-gray-700 h-5 rounded-md">
 
                                     </div>
                                 </td>
-                                <td className="py-3 border-b-[0.5px] border-gray-300">
-                                    <div className="w-64 bg-gray-300 h-5 rounded-md">
+                                <td className="py-3 border-b-[0.5px] border-gray-300 dark:border-gray-700">
+                                    <div className="w-64 bg-gray-300 dark:bg-gray-700 h-5 rounded-md">
 
                                     </div>
                                 </td>
-                                <td className="py-3 border-b-[0.5px] border-gray-300">
-                                    <div className="w-36 bg-gray-300 h-5 rounded-md">
+                                <td className="py-3 border-b-[0.5px] border-gray-300 dark:border-gray-700">
+                                    <div className="w-36 bg-gray-300 dark:bg-gray-700 h-5 rounded-md">
 
                                     </div>
                                 </td>
-                                <td className="py-2 border-b-[0.5px] border-gray-300">
-                                    <div className="w-28 bg-gray-300 h-5 rounded-md">
+                                <td className="py-2 border-b-[0.5px] border-gray-300 dark:border-gray-700">
+                                    <div className="w-28 bg-gray-300 dark:bg-gray-700 h-5 rounded-md">
 
                                     </div>
                                 </td>
-                                <td className="py-2 border-b-[0.5px] border-gray-300">
-                                    <div className="w-28 bg-gray-300 h-5 rounded-md">
+                                <td className="py-2 border-b-[0.5px] border-gray-300 dark:border-gray-700">
+                                    <div className="w-28 bg-gray-300 dark:bg-gray-700 h-5 rounded-md">
 
                                     </div>
                                 </td>
-                                <td className="py-2 border-b-[0.5px] border-gray-300 text-center">
-                                    <div className="w-10 mx-auto bg-gray-300 h-5 rounded-md">
+                                <td className="py-2 border-b-[0.5px] border-gray-300 dark:border-gray-700 text-center">
+                                    <div className="w-10 mx-auto bg-gray-300 dark:bg-gray-700 h-5 rounded-md">
 
                                     </div>
                                 </td>

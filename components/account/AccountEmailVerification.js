@@ -61,16 +61,16 @@ export default function AccountEmailVerification() {
     }
 
     return(
-        <div className="p-5 bg-white drop-shadow mb-5 rounded-md flex items-center justify-between">
+        <div className="p-5 bg-white dark:bg-gray-900 drop-shadow mb-5 rounded-md flex items-center justify-between">
             <div>
-                <h3 className="flex items-center gap-2 text-lg text-red-500">
+                <h3 className="flex items-center gap-2 text-lg text-red-500 dark:text-red-400">
                     <FiAlertTriangle />
                     <span>Votre adresse email n'est pas vérifiée</span>
                 </h3>
             </div>
             {
                 emailSent && !error &&
-                <div className="px-3 py-2 bg-gray-300 rounded-md">
+                <div className="px-3 py-2 bg-gray-300 dark:bg-gray-700 dark:text-gray-200 rounded-md">
                     Renvoyer un email dans {counter} secondes        
                 </div>
             }

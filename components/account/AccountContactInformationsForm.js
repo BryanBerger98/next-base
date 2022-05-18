@@ -115,12 +115,12 @@ export default function AccountContactInformationsForm({ currentUser }) {
                         </h3>
                         <div className="flex flex-col mb-3 relative">
                             <label htmlFor="accountContactPhoneNumberInput" className="mb-1">Téléphone</label>
-                            <Field type="tel" name='phoneNumber' id="accountContactPhoneNumberInput" placeholder="Ex: +33 6 01 02 03 04" className="bg-gray-100 placeholder:text-gray-400 p-2 rounded-md" />
+                            <Field type="tel" name='phoneNumber' id="accountContactPhoneNumberInput" placeholder="Ex: +33 6 01 02 03 04" className="bg-gray-100 placeholder:text-gray-400 dark:bg-gray-700 dark:text-gray-50 p-2 rounded-md shadow-inner" />
                             {touched.phoneNumber && errors.phoneNumber && <span className='ml-2 flex items-center text-rose-500 absolute bottom-2 right-2'><span className='mr-1'>{errors.phoneNumber}</span><FiAlertCircle /></span>}
                         </div>
                         <div className="flex flex-col text-sm mb-5 relative">
                             <label htmlFor="accountContactEmailInput" className="mb-1">Adresse email</label>
-                            <Field type="email" name='email' id="accountContactEmailInput" placeholder="example@example.com" className="bg-gray-100 placeholder:text-gray-400 p-2 rounded-md" />
+                            <Field type="email" name='email' id="accountContactEmailInput" placeholder="example@example.com" className="bg-gray-100 placeholder:text-gray-400 dark:bg-gray-700 dark:text-gray-50 p-2 rounded-md shadow-inner" />
                             {touched.email && errors.email && <span className='ml-2 flex items-center text-rose-500 absolute bottom-2 right-2'><span className='mr-1'>{errors.email}</span><FiAlertCircle /></span>}
                         </div>
                         <div className="mt-auto mr-auto">

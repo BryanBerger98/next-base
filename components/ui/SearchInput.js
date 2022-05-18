@@ -17,7 +17,7 @@ export default function SearchInput({ onSearchElements }) {
 
   return (
     <div className="relative text-sm">
-        <input type="search" placeholder='Rechercher...' className="bg-gray-100 placeholder:text-gray-400 p-2 rounded-md pl-8 w-full drop-shadow" onKeyDown={clearDelay} onChange={onSearch} />
+        <input type="search" placeholder='Rechercher...' className="bg-gray-100 dark:bg-gray-900 placeholder:text-gray-400 dark:text-gray-50 p-2 rounded-md pl-8 w-full drop-shadow" onKeyDown={clearDelay} onChange={onSearch} />
         <FiSearch className="absolute text-base text-gray-400 left-2 inset-y-0 my-auto" />
     </div>
   )

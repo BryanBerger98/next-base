@@ -89,7 +89,7 @@ export default function UserTableDataMenu({user, currentUser}) {
       <div className="">
         <Menu as="div" className="relative inline-block text-left">
           <div>
-            <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-800 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+            <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-800 dark:text-gray-200 rounded-lg focus:outline-none">
               <FiMoreVertical />
             </Menu.Button>
           </div>
@@ -102,13 +102,13 @@ export default function UserTableDataMenu({user, currentUser}) {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute right-0 w-60 mt-2 origin-top-right bg-gray-100 divide-y divide-gray-300/25 rounded-lg drop-shadow-md focus:outline-none z-50">
+            <Menu.Items className="absolute right-0 w-60 mt-2 origin-top-right bg-gray-100 dark:bg-gray-700 divide-y divide-gray-300/25 rounded-lg drop-shadow-md focus:outline-none z-50">
               <div className="px-1 py-1">
                 <Menu.Item>
                   {({ active }) => (
                     <button
                       className={`${
-                        active ? 'bg-indigo-500 text-white' : 'text-gray-900'
+                        active ? 'bg-indigo-500 text-white dark:bg-indigo-300 dark:text-gray-700' : 'text-gray-900 dark:text-gray-200'
                       } group flex rounded-lg items-center w-full px-2 py-2 text-sm`}
                       onClick={() => {router.push('users/edit/'+user._id)}}
                     >
@@ -119,7 +119,7 @@ export default function UserTableDataMenu({user, currentUser}) {
                         />
                       ) : (
                         <FiEdit
-                          className="w-5 h-5 mr-2 text-indigo-500"
+                          className="w-5 h-5 mr-2 text-indigo-500 dark:text-indigo-300"
                           aria-hidden="true"
                         />
                       )}
@@ -134,7 +134,7 @@ export default function UserTableDataMenu({user, currentUser}) {
                       {({ active }) => (
                         <button
                           className={`${
-                            active ? 'bg-indigo-500 text-white' : 'text-gray-900'
+                            active ? 'bg-indigo-500 text-white dark:bg-indigo-300 dark:text-gray-700' : 'text-gray-900 dark:text-gray-200'
                           } group flex rounded-lg items-center w-full px-2 py-2 text-sm`}
                           onClick={onSendResetPasswordEmail}
                         >
@@ -145,7 +145,7 @@ export default function UserTableDataMenu({user, currentUser}) {
                             />
                           ) : (
                             <FiKey
-                              className="w-5 h-5 mr-2 text-indigo-500"
+                              className="w-5 h-5 mr-2 text-indigo-500 dark:text-indigo-300"
                               aria-hidden="true"
                             />
                           )}
@@ -159,7 +159,7 @@ export default function UserTableDataMenu({user, currentUser}) {
                         {({ active }) => (
                           <button
                             className={`${
-                              active ? 'bg-yellow-500 text-white' : 'text-gray-900'
+                              active ? 'bg-yellow-500 text-white dark:bg-yellow-300 dark:text-gray-700' : 'text-gray-900 dark:text-gray-200'
                             } group flex rounded-lg items-center w-full px-2 py-2 text-sm`}
                             onClick={onSwitchDisableUser}
                           >
@@ -170,7 +170,7 @@ export default function UserTableDataMenu({user, currentUser}) {
                               />
                             ) : (
                               <FiLock
-                                className="w-5 h-5 mr-2 text-yellow-500"
+                                className="w-5 h-5 mr-2 text-yellow-500 dark:text-yellow-300"
                                 aria-hidden="true"
                               />
                             )}
@@ -187,7 +187,7 @@ export default function UserTableDataMenu({user, currentUser}) {
                     {({ active }) => (
                       <button
                         className={`${
-                          active ? 'bg-yellow-500 text-white' : 'text-gray-900'
+                          active ? 'bg-yellow-500 text-white dark:bg-yellow-300 dark:text-gray-700' : 'text-gray-900 dark:text-gray-200'
                         } group flex rounded-lg items-center w-full px-2 py-2 text-sm`}
                         onClick={onSwitchDisableUser}
                       >
@@ -198,7 +198,7 @@ export default function UserTableDataMenu({user, currentUser}) {
                           />
                         ) : (
                           <FiUnlock
-                            className="w-5 h-5 mr-2 text-yellow-500"
+                            className="w-5 h-5 mr-2 text-yellow-500 dark:text-yellow-300"
                             aria-hidden="true"
                           />
                         )}
@@ -215,7 +215,7 @@ export default function UserTableDataMenu({user, currentUser}) {
                     {({ active }) => (
                       <button
                         className={`${
-                          active ? 'bg-rose-500 text-white' : 'text-gray-900'
+                          active ? 'bg-rose-500 text-white dark:bg-rose-300 dark:text-gray-700' : 'text-gray-900 dark:text-gray-200'
                         } group flex rounded-lg items-center w-full px-2 py-2 text-sm`}
                         onClick={() => setIsDeleteUserModalOpen(true)}
                       >
@@ -226,7 +226,7 @@ export default function UserTableDataMenu({user, currentUser}) {
                           />
                         ) : (
                           <FiTrash
-                            className="w-5 h-5 mr-2 text-rose-500"
+                            className="w-5 h-5 mr-2 text-rose-500 dark:text-rose-300"
                             aria-hidden="true"
                           />
                         )}
@@ -242,7 +242,7 @@ export default function UserTableDataMenu({user, currentUser}) {
       </div>
       <Modal isOpen={isDisableUserModalOpen} closeModal={() => setIsDisableUserModalOpen(false)} title={{text: <span className='flex items-center gap-2'><FiLock /><span>Suspendre ce compte</span></span>, color: 'text-yellow-500'}}>
         <div className="my-5">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 dark:text-gray-300">
             Une fois suspendu, l'utilisateur de ce compte ne pourra plus se connecter aux applications utilisant O'Keys.
           </p>
         </div>
@@ -268,14 +268,14 @@ export default function UserTableDataMenu({user, currentUser}) {
       </Modal>
       <Modal isOpen={isDeleteUserModalOpen} closeModal={() => setIsDeleteUserModalOpen(false)} title={{text: <span className='flex items-center gap-2'><FiUnlock /><span>Supprimer ce compte</span></span>, color: 'text-red-500'}}>
         <div className="my-5">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 dark:text-gray-300">
             Les données relatives à cet utilisateur seront définitivement supprimées.
           </p>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 dark:text-gray-300">
             Pour confirmer la suppression de ce compte, veuillez écrire l'adresse email de l'utilisateur (<span className='font-bold select-none'>{user.email}</span>) ci-dessous:
           </p>
           <div className="flex text-sm">
-            <input type="email" value={confirmDeleteUserInputValue} onChange={(e) => setConfirmDeleteUserInputValue(e.target.value)} className="p-2 rounded-lg border-[0.5px] border-gray-200 bg-white w-full" id="deleteUserEmailInput" placeholder="example@example.com" />
+            <input type="email" value={confirmDeleteUserInputValue} onChange={(e) => setConfirmDeleteUserInputValue(e.target.value)} className="p-2 rounded-md border-[0.5px] border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 w-full dark:text-gray-50" id="deleteUserEmailInput" placeholder="example@example.com" />
           </div>
         </div>
 
